@@ -4,7 +4,9 @@ import Footer from "../../components/footer.jsx"
 import Header from "../../components/header.jsx"
 import ResulComp from "../../components/resulComp.jsx"
 import Opinion from "../../components/opinion.jsx"
+
 import axios from 'axios';
+import React from 'react';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000'

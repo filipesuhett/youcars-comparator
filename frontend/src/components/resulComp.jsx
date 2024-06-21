@@ -101,7 +101,12 @@ const ResulComp = (props) => {
             
             <div style={styles.informacoes}>
             <p style={styles.text}>Consumo</p>
-            <p style={styles.textresult}>{props.consumo ?? "consumo"}</p>
+            <p style={styles.textresult}>{props.consumoCidade ?? "consumoCITY"}</p>
+            </div>
+
+            <div style={styles.informacoes}>
+            <p style={styles.text}>Consumo</p>
+            <p style={styles.textresult}>{props.consumoEstrada ?? "consumo"}</p>
             </div>
             
             <div style={styles.informacoes}>
