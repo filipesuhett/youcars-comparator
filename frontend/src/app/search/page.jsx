@@ -4,7 +4,9 @@ import Footer from "../../components/footer.jsx"
 import Header from "../../components/header.jsx"
 import ResulComp from "../../components/resulComp.jsx"
 import Opinion from "../../components/opinion.jsx"
+
 import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000'
@@ -33,9 +35,6 @@ const styles = {
     width: '418px',
     height: '518px',
     backgroundColor: '#fff',
-    borderRadius: '8px',
-    border: '5px solid #505050',
-    boxSizing: 'border-box',
   },
   Text: {
     color: '#000000',
@@ -44,27 +43,80 @@ const styles = {
     fontWeight: '500',
     lineHeight: '31px',
   },
+  Dropdown: {
+    cursor: 'pointer',
+    top: '279px',
+    left: '73px',
+    width: '309px',
+    height: '52px',
+    padding: '0px 8px',
+    border: '0',
+    boxSizing: 'border-box',
+    borderRadius: '24px',
+    boxShadow: '2px 2px 4px rgba(3,3,3,0.1)',
+    backgroundColor: '#f5f5f5',
+    color: '#919191',
+    fontSize: '16px',
+    fontFamily: 'Source Sans Pro',
+    fontWeight: 500,
+    lineHeight: '20px',
+    outline: 'none',
+  },
 };
 
+
+
+
 export default function Search() {
+  let dados = {}
+  let marca = ""
+  let ano = ""
+  let modelo = ""
+  
+  const pegarDadosBD = (nome) =>{
+    api.get(`/${nome}`, (values)=>{
+      dados = values
+    })
+  }
+
+  
 
   return (
     <div className=" bg-white flex min-h-screen flex-col items-center justify-between p-24">
         <Header/>
 
         <div style={styles.containerOptions}>
-          
-          <p style={styles.Text}>Pesquise alguma característica do carro</p>
-          
-          <div>
+            <p style={styles.Text}>Pesquise alguma característica do carro</p>
 
-          </div>
+            <select style={styles.Dropdown} defaultValue="" onClick={pegarDadosBD("marca")}>
+              <option value="" disabled hidden> {props.label ?? "Selecione uma marca" }</option>
+              {dados.map((value) => (<option value={value} key={value} onClick={marca = value}>{value}</option>))}
+            </select>
+
+            <select style={styles.Dropdown} defaultValue="" onClick={pegarDadosBD("ano")}>
+              <option value="" disabled hidden> {props.label ?? "Selecione uma opção" }</option>
+              {dados.map((value) => (<option value={value} key={value}>{value}</option>))}
+            </select>
+
+            <select style={styles.Dropdown} defaultValue="" onClick={pegarDadosBD("modelo")}>
+              <option value="" disabled hidden> {props.label ?? "Selecione uma opção" }</option>
+              {dados.map((value) => (<option value={value} key={value}>{value}</option>))}
+            </select>
           
-          <button style={styles.Button}>Pesquisar</button>
+          <button style={styles.Button} onClick={(marca,ano,modelo)}>Pesquisar</button>
 
         </div>
+
+        <div style = {styles.results}>
+
+        </div>
+
+        <div  style = {styles.comparar}>
+          <button>Comparar</button>
+        </div>
+
         <Footer/>
-      <button></button>
+
     </div>
     
   );

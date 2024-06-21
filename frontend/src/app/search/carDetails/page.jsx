@@ -8,13 +8,37 @@ const api = axios.create({
   baseURL: 'http://localhost:3000'
 })
 
-export default function Search() {
+export default function CarDetais() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <Header />
+      <Header/>
 
-      <button></button>
+      <div>
+        <div style={styles.img}>
+
+        </div>
+
+        <div style={styles.informations}>
+          <div>
+            <p>Especificações do carro</p>
+            
+
+          </div>
+
+
+
+        </div>
+
+        <div style={styles.addComents}>
+          <p>Comente aqui</p>
+          <input style={styles.Input} placeholder="Deixe seu comentário sobre o carro aqui" />
+          <button style={styles.Button}>Enviar</button>
+        </div>
+      
+      </div>
+
+      <Footer/>
     </div>
     
   );
