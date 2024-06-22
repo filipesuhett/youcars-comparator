@@ -62,21 +62,50 @@ const api = axios.create({
 
 
 const Buttonteste = (props) => {
-    const [users, setUsers ] = useState([])
+    const [marca, setMarca ] = useState([])
+    const [modelo, setModelo ] = useState([])
+    const [ano, setAno ] = useState([])
 
-    function handleClickTeste(){
+    function handleClickGetMarca(){
         
-        api.get('/').then((marca)=>{
-        setUsers(marca.data)
-        })
+      api.get('/car/marca').then((dado)=>{
+      setMarca(dado.data)
+      })
+    }
+
+    function handleClickGetModelo(){
+        
+      api.get('/car/modelo').then((dado)=>{
+      setModelo(dado.data)
+      })
+    }
+
+    function handleClickGetAno(){
+        
+      api.get('/car/ano').then((dado)=>{
+      setAno(dado.data)
+      })
     }
 
   return (
     <div >
-            <select style={styles.Dropdown} defaultValue="" onClick={handleClickTeste}>
-              <option value="" > {props.label ?? "Selecione uma marca" }</option>
-              {users.map((value) => (<option value={value.marca} key={value.marca}>{value.marca}</option>))}
+      
+            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetMarca}>
+              <option value="" > {props.label ?? `Selecione uma Marca` }</option>
+              {marca.map((value) => (<option value={value.marca} key={value.marca}>{value.marca}</option>))}
             </select>
+
+            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetModelo}>
+              <option value="" > {props.label ?? `Selecione um Modelo` }</option>
+              {modelo.map((value) => (<option value={value.modelo} key={value.modelo}>{value.modelo}</option>))}
+            </select>
+
+            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetAno}>
+              <option value="" > {props.label ?? `Selecione uma Ano` }</option>
+              {ano.map((value) => (<option value={value.ano} key={value.ano}>{value.ano}</option>))}
+            </select>
+
+            <button style={styles.Button} >Pesquisar</button>
 
     </div>
   );

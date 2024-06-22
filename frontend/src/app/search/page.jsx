@@ -4,9 +4,8 @@ import Footer from "../../components/footer.jsx"
 import Header from "../../components/header.jsx"
 import ResulComp from "../../components/resulComp.jsx"
 import Opinion from "../../components/opinion.jsx"
-
+import ButtonTeste from "../../components/searchCar.jsx"
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000'
@@ -68,19 +67,6 @@ const styles = {
 
 
 export default function Search() {
-  let dados = {}
-  let marca = ""
-  let ano = ""
-  let modelo = ""
-  
-  const pegarDadosBD = (nome) =>{
-    api.get(`/${nome}`, (values)=>{
-      dados = values
-    })
-  }
-
-  
-
   return (
     <div className=" bg-white flex min-h-screen flex-col items-center justify-between p-24">
         <Header/>
@@ -88,22 +74,8 @@ export default function Search() {
         <div style={styles.containerOptions}>
             <p style={styles.Text}>Pesquise alguma característica do carro</p>
 
-            <select style={styles.Dropdown} defaultValue="" onClick={pegarDadosBD("marca")}>
-              <option value="" disabled hidden> {props.label ?? "Selecione uma marca" }</option>
-              {dados.map((value) => (<option value={value} key={value} onClick={marca = value}>{value}</option>))}
-            </select>
-
-            <select style={styles.Dropdown} defaultValue="" onClick={pegarDadosBD("ano")}>
-              <option value="" disabled hidden> {props.label ?? "Selecione uma opção" }</option>
-              {dados.map((value) => (<option value={value} key={value}>{value}</option>))}
-            </select>
-
-            <select style={styles.Dropdown} defaultValue="" onClick={pegarDadosBD("modelo")}>
-              <option value="" disabled hidden> {props.label ?? "Selecione uma opção" }</option>
-              {dados.map((value) => (<option value={value} key={value}>{value}</option>))}
-            </select>
+            <ButtonTeste/>
           
-          <button style={styles.Button} onClick={(marca,ano,modelo)}>Pesquisar</button>
 
         </div>
 
