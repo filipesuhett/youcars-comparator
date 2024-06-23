@@ -50,10 +50,10 @@ exports.searchYear = async (req, res) => {
     }
 }
 
-exports.searchVersion = async (req, res) => {
+exports.searchFilterCar = async (req, res) => {
     const { marca, modelo, ano } = req.body;
 
-    if (!marca || !modelo || !ano) {
+    if (!marca) {
         return res.status(200).send({
             sucesso: 0,
             cod_erro: 1,
@@ -62,8 +62,41 @@ exports.searchVersion = async (req, res) => {
     }
 
     try {
-        const getVersion = await db.query('SELECT DISTINCT versao FROM Carro WHERE marca = $1 AND modelo = $2 AND ano = $3', [marca, modelo, ano]);
-        return res.json(getVersion.rows);
+        if (ano == 0 && modelo == 0) {
+            const getFilterCar = await db.query('SELECT * FROM Carro WHERE marca = $1', [marca]);
+            if (!getFilterCar) {
+                return res.status(200).send({
+                    sucesso: 0,
+                    cod_erro: 1,
+                    erro: 'nehum carro encontrado'
+                });
+            }
+            return res.json(getFilterCar.rows);
+        }
+
+        else if (ano == 0) {
+            const getFilterCar = await db.query('SELECT * FROM Carro WHERE marca = $1 AND modelo = $2', [marca, modelo]);
+            if (!getFilterCar) {
+                return res.status(200).send({
+                    sucesso: 0,
+                    cod_erro: 1,
+                    erro: 'nehum carro encontrado'
+                });
+            }
+            return res.json(getFilterCar.rows);
+        }
+
+        else {
+            const getFilterCar = await db.query('SELECT * FROM Carro WHERE marca = $1 AND modelo = $2 AND ano = $3', [marca, modelo, ano]);
+            if (!getFilterCar) {
+                return res.status(200).send({
+                    sucesso: 0,
+                    cod_erro: 1,
+                    erro: 'nehum carro encontrado'
+                });
+            }
+            return res.json(getFilterCar.rows);
+        }
     } catch (err) {
         console.error('Error executing query', err.stack);
         return res.status(500).json({ error: 'Internal Server Error' });

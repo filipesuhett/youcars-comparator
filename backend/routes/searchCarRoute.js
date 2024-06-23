@@ -20,7 +20,7 @@ var challangeAuth = basicAuth(
 router.get('/brand', challangeAuth, searchCar.searchBrand);
 router.get('/model', challangeAuth, searchCar.searchModel);
 router.get('/year', challangeAuth,searchCar.searchYear)
-router.get('/Version', challangeAuth,searchCar.searchVersion)
+router.get('/filtercar', challangeAuth,searchCar.searchFilterCar)
 
 
 module.exports = router;
