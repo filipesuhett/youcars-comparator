@@ -98,7 +98,7 @@ const Card = (props) => {
         <Image
         priority={true}
         style={styles.imge}
-        src={defaultImage}
+        src={props.urlIMG ?? defaultImage }
         width={241}
         height={236}
         alt="Picture of the author"/>

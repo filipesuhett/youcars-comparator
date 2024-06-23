@@ -3,10 +3,11 @@ import React from 'react';
 const styles = {
   Header: {
     display: 'Flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     //esse row aqui procede ou eu errei? Aliais, teria q colocar um paddind nas coisas ou só fixar elas nos devidos lugares da navBar?
     flexDirection: "Row",
+    position: 'fixed',
     top: '0px',
     left: '0px',
     width: '100%',
@@ -19,8 +20,9 @@ const styles = {
     fontSize: '16px',
     top: '24px',
     left: '24px',
-    width: '16px',
-    height: '16px',
+    width: '20px',
+    height: '20px',
+    
   },
   Button: {
     cursor: 'pointer',
@@ -32,11 +34,18 @@ const styles = {
     backgroundColor: 'None',
     
     color: '#ffffff',
-    fontSize: '16px',
+    fontSize: '18px',
     fontFamily: 'Source Sans Pro',
     fontWeight: 400,
     lineHeight: '24px',
     outline: 'none',
+  },
+  Text: {
+    color: '#ffffff',
+    fontSize: '18px',
+    fontFamily: 'Source Sans Pro',
+    fontWeight: 400,
+    lineHeight: '24px',
   },
 };
 
@@ -54,9 +63,9 @@ const IconComponent = () => (
 const Header = () => {
   return (
     <div style={styles.Header}>
-        <div>
+        <div className='flex items-center justify-between m-12 w-28'>
             <defaultProps.IconComponent />
-            <p style={styles.text}>You Cars</p> 
+            <p style={styles.Text}>You Cars</p> 
         </div>
 
         {/* 

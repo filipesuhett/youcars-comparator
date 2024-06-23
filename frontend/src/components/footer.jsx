@@ -2,27 +2,35 @@ import React from 'react';
 
 const styles = {
   Footer: {
-    top: '1847px',
+    display:'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'fixed',
+    bottom: '0px',
     left: '0px',
-    width: '100%',
-    height: '87px',
+    width: '100vw',
+    height: '40px',
     backgroundColor: '#f43030',
   },
   TextTitle: {
     color: '#030303',
-    fontSize: '18px',
+    fontSize: '12px',
     fontFamily: 'Source Sans Pro',
     fontWeight: 600,
     lineHeight: '22px',
-    textAlign: 'left'
+    textAlign: 'left',
+    padding: '10px',
+    margin: '0 0 0 120px'
   },
   Text: {
     color: '#030303',
-    fontSize: '14px',
+    fontSize: '12px',
     fontFamily: 'Source Sans Pro',
     fontWeight: 300,
     lineHeight: '16px',
     textAlign: 'right',
+    padding: '10px',
+    margin: '0 120px 0 0'
   },
 };
 

@@ -14,9 +14,9 @@ const styles = {
     boxSizing: 'border-box',
   },
   imge: {
-    width:'241px',
-    height:'236px',
-    borderRadius: '24px',
+    width: '191px',
+    height: '172px',
+    borderRadius: '16px',
     backgroundPosition: 'center center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -31,8 +31,6 @@ const styles = {
   },
   Button: {
     cursor: 'pointer',
-    top: '767px',
-    left: '505px',
     width: '193px',
     height: '40px',
     padding: '0px 8px',
@@ -50,7 +48,6 @@ const styles = {
 };
 
 const defaultImage = "/img/carro.png"
-
 const CardCompare = (props) => {
   return (
     <div style={styles.Card}>
@@ -62,8 +59,8 @@ const CardCompare = (props) => {
       <Image
         priority={true}
         style={styles.imge}
-        src={defaultImage}
-        width={241}
+        src={props.urlIMG ?? defaultImage }
+        width={191}
         height={236}
         alt="Picture of the author"/>
 
