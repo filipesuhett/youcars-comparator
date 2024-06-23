@@ -5,6 +5,7 @@ var app = express()
 
 // Rotas
 const searchCarRoute = require('./routes/searchCarRoute');
+const commentRoute = require('./routes/commentRoute');
 const userRoute = require('./routes/user');
  
 app.use(express.urlencoded({extended : true}));
@@ -15,6 +16,7 @@ app.use(cors());
 // app.use(index);
 app.use('/api/', searchCarRoute);
 app.use('/api/', userRoute);
+app.use('/api/', commentRoute);
 
 // app.get('/car/marca', function (req, res) {
 //   res.json([
