@@ -71,21 +71,6 @@ export default function Search() {
     <div className=" bg-white flex min-h-screen flex-col items-center justify-between p-24">
         <Header/>
 
-        <div style={styles.containerOptions}>
-            <p style={styles.Text}>Pesquise alguma característica do carro</p>
-
-            <ButtonTeste/>
-          
-
-        </div>
-
-        <div style = {styles.results}>
-
-        </div>
-
-        <div  style = {styles.comparar}>
-          <button>Comparar</button>
-        </div>
 
         <Footer/>
 

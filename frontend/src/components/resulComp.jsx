@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import "../app/globals.css"
 
 const styles = {
   
@@ -31,7 +32,7 @@ const styles = {
     width: '100%',
     color: '#030303',
     fontSize: '18px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     fontWeight: 700,
     lineHeight: '22px',
   },
@@ -55,7 +56,7 @@ const styles = {
     width: '100%',
     color: '#030303',
     fontSize: '18px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     lineHeight: '22px',
   }
 };

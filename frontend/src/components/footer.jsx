@@ -1,13 +1,12 @@
 import React from 'react';
+import "../app/globals.css"
 
 const styles = {
   Footer: {
     display:'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'fixed',
-    bottom: '0px',
-    left: '0px',
+    position: 'static',
     width: '100vw',
     height: '40px',
     backgroundColor: '#f43030',

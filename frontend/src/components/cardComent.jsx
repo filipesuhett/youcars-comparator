@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-const imagemCarro = "https://cdn.discordapp.com/attachments/1026594236017160312/1253116567630250034/image.png?ex=6674af3f&is=66735dbf&hm=7f411f909408547bdeae8c15690aaae29adc76b05a5c5245ba28b652d8b990de&"
 import "../app/globals.css"
 const styles = {
   
@@ -9,8 +8,8 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: "Column",
-    width: '273px',
-    height: '454px',
+    width: '306px',
+    height: '324px',
     backgroundColor: '#e5e7eb',
     borderRadius: '24px',
     border: '1px solid #030303',
@@ -89,7 +88,7 @@ const styles = {
 
 const defaultImage = "/img/carro.png"
 
-const Card = (props) => {
+const CardComent = (props) => {
   return (
     <div style={styles.Card}>
 
@@ -109,14 +108,12 @@ const Card = (props) => {
               <p>{props.preco ?? "20.50"}</p>
             </div>
             <div style={styles.like}>
-              <button style={styles.buttonLike}></button>
               <p>{props.quantidadeLike ?? "2.5k"}</p>
             </div>
-          <button style={styles.buttonAdicionar}>Adicionar</button>
           </div>
         
     </div>
   );
 };
 
-export default Card;
+export default CardComent;

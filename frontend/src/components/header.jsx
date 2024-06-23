@@ -1,4 +1,5 @@
 import React from 'react';
+import "../app/globals.css"
 
 const styles = {
   Header: {
@@ -25,6 +26,9 @@ const styles = {
     
   },
   Button: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     cursor: 'pointer',
     width: '120px',
     height: '32px',
@@ -35,7 +39,7 @@ const styles = {
     
     color: '#ffffff',
     fontSize: '18px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     fontWeight: 400,
     lineHeight: '24px',
     outline: 'none',
@@ -43,7 +47,7 @@ const styles = {
   Text: {
     color: '#ffffff',
     fontSize: '18px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     fontWeight: 400,
     lineHeight: '24px',
   },
@@ -71,8 +75,8 @@ const Header = () => {
         {/* 
         Como manda esses botoes para os lugares deles? não sei.
         */}
-        <button style={styles.Button}>Home</button>
-        <button style={styles.Button}>Perfil</button>
+        <a style={styles.Button} href="/">Home</a>
+        <a style={styles.Button} href="/perfil">Perfil</a>
         
     </div>
   );

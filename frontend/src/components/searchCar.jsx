@@ -2,6 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react'
+import "../app/globals.css"
 
 const api = axios.create({
     baseURL: 'http://localhost:3001'
@@ -22,7 +23,7 @@ const api = axios.create({
       backgroundColor: '#f43030',
       color: '#ffffff',
       fontSize: '22px',
-      fontFamily: 'Source Sans Pro',
+      fontFamily: 'Source Sans 3',
       fontWeight: '500',
       lineHeight: '29px',
       outline: 'none',
@@ -53,7 +54,7 @@ const api = axios.create({
       backgroundColor: '#f5f5f5',
       color: '#919191',
       fontSize: '16px',
-      fontFamily: 'Source Sans Pro',
+      fontFamily: 'Source Sans 3',
       fontWeight: 500,
       lineHeight: '20px',
       outline: 'none',
@@ -106,7 +107,6 @@ const Buttonteste = (props) => {
             </select>
 
             <button style={styles.Button} >Pesquisar</button>
-
     </div>
   );
 };
