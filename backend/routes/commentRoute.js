@@ -1,7 +1,7 @@
 const router = require('express-promise-router')();
 const basicAuth = require('express-basic-auth');
 
-const searchCar = require('../controllers/searchCar');
+const comment = require('../controllers/comment');
 
 const auth = require('../controllers/auth');
 
@@ -16,11 +16,9 @@ var challangeAuth = basicAuth(
     }
 );
 
-// router.get('/brand', searchCar.searchBrand);
-router.get('/brand', challangeAuth, searchCar.searchBrand);
-router.get('/model', challangeAuth, searchCar.searchModel);
-router.get('/year', challangeAuth,searchCar.searchYear)
-router.get('/filtercar', challangeAuth,searchCar.searchFilterCar)
+// router.get('/brand', comment.searchBrand);
+router.post('/add_comment', challangeAuth, comment.addComment);
+router.post('/remove_comment', challangeAuth, comment.removeComment);
 
 
 module.exports = router;
