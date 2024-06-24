@@ -170,7 +170,7 @@ const styles = {
 export default function Home() {
   if(getUser){
     return (
-      <div className="flex h-100% flex-col items-center justify-between bg-white">
+      <div className="flex w-screen flex-col items-center justify-between bg-white">
           <nav style={styles.Header}>
             <p style={styles.Text}>You Cars</p>
             <a style={styles.TextPerfil} href="/perfil">Perfil</a>

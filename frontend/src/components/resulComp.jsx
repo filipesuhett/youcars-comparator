@@ -36,6 +36,18 @@ const styles = {
     fontWeight: 700,
     lineHeight: '22px',
   },
+  textInfo: {
+    display: 'Flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '23px',
+    width: '100%',
+    color: '#030303',
+    fontSize: '14px',
+    fontFamily: 'Source Sans 3',
+    lineHeight: '20px',
+    fontWeight: 700,
+  },
   especificacao: {
     display: 'Flex',
     justifyContent: 'center',
@@ -55,9 +67,9 @@ const styles = {
     height: '23px',
     width: '100%',
     color: '#030303',
-    fontSize: '18px',
+    fontSize: '14px',
     fontFamily: 'Source Sans 3',
-    lineHeight: '22px',
+    lineHeight: '20px',
   }
 };
 
@@ -81,47 +93,47 @@ const ResulComp = (props) => {
         <div style={styles.especificacao}>
             
             <div style={styles.informacoes}>
-                <p style={styles.text}>Marca</p>
+                <p style={styles.textInfo}>Marca</p>
                 <p style={styles.textresult}>{props.marca ?? "Honda"}</p>
             </div>
             
             <div style={styles.informacoes}>
-            <p style={styles.text}>Modelo</p>
+            <p style={styles.textInfo}>Modelo</p>
             <p style={styles.textresult}>{props.modelo ?? "modelo"}</p>
             </div>
             
             <div style={styles.informacoes}>
-            <p style={styles.text}>Ano</p>
+            <p style={styles.textInfo}>Ano</p>
             <p style={styles.textresult}>{props.ano ?? "xx/xx/xxxx"}</p>
             </div>
             
             <div style={styles.informacoes}> 
-            <p style={styles.text}>Preço</p>
+            <p style={styles.textInfo}>Preço</p>
             <p style={styles.textresult}>{props.preco ?? "preco"}</p>
             </div>
             
             <div style={styles.informacoes}>
-            <p style={styles.text}>Consumo</p>
+            <p style={styles.textInfo}>Consumo</p>
             <p style={styles.textresult}>{props.consumoCidade ?? "consumoCITY"}</p>
             </div>
 
             <div style={styles.informacoes}>
-            <p style={styles.text}>Consumo</p>
+            <p style={styles.textInfo}>Consumo</p>
             <p style={styles.textresult}>{props.consumoEstrada ?? "consumo"}</p>
             </div>
             
             <div style={styles.informacoes}>
-            <p style={styles.text}>Cavalos</p>
+            <p style={styles.textInfo}>Cavalos</p>
             <p style={styles.textresult}>{props.cavalos ?? "cavalos"}</p>
             </div>
 
             <div style={styles.informacoes}>
-            <p style={styles.text}>Direção</p>
+            <p style={styles.textInfo}>Direção</p>
             <p style={styles.textresult}>{props.direcao ?? "direcao"}</p>
             </div>
             
             <div style={styles.informacoes}>
-            <p style={styles.text}>Freio</p>
+            <p style={styles.textInfo}>Freio</p>
             <p style={styles.textresult}>{props.freio ?? "freio"}</p>  
             </div>
 

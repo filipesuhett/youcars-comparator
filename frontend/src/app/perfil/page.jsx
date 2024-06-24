@@ -1,10 +1,8 @@
-import Card from "../components/cardCar.jsx"
-import Opinion from "../components/opinion.jsx"
-import ButtonTeste from "../components/searchCar.jsx"
 import axios from 'axios';
 import React from "react"
+import "../app/globals.css"
 
-import {getUser} from '../helpers/util.jsx'
+import { getUser } from '../../helpers/util.jsx'
 
 const api = axios.create({
   baseURL: 'http://localhost:3001'
@@ -20,8 +18,6 @@ const styles = {
     lineHeight: '24px',
   },
   opicoes: {
-    top: '-1px',
-    left: '0px',
     width: '300px',
     height: '900px',
     backgroundColor: '#a9a9a9',
