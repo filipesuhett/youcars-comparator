@@ -1,6 +1,7 @@
+'use client'
 import axios from 'axios';
 import React from "react"
-import "../app/globals.css"
+import "../globals.css"
 
 import { getUser } from '../../helpers/util.jsx'
 
@@ -48,7 +49,7 @@ const styles = {
   };
 
 export default function Home() {
-  if(getUser){
+  if(getUser() != null){
     return (
       <div className="flex h-100% flex-col items-center justify-between bg-white">
 

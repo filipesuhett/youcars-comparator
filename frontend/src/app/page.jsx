@@ -1,3 +1,5 @@
+'use client'
+
 import Card from "../components/cardCar.jsx"
 import CardCompare from "../components/cardCompare.jsx"
 import Footer from "../components/footer.jsx"
@@ -168,7 +170,7 @@ const styles = {
   };
 
 export default function Home() {
-  if(getUser){
+  if(getUser() != null){
     return (
       <div className="flex w-screen flex-col items-center justify-between bg-white">
           <nav style={styles.Header}>
@@ -227,29 +229,61 @@ export default function Home() {
     );
   }
   else{
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-          <nav style={styles.Header}>
-          <p style={styles.Text}>You Cars</p>
-            <a style={styles.Button} href="/login">Fazer login</a>
-          </nav>
+    return(
+      <div className="flex w-screen flex-col items-center justify-between bg-white">
+      <nav style={styles.Header}>
+        <p style={styles.Text}>You Cars</p>
+        <a style={styles.TextPerfil} href="/login">Fazer Login</a>
+      </nav>
 
-          <section style={styles.mainHome}>
-            <div>
-              <h1 style={styles.Title}> Compare os detalhes dos mais diversos carros</h1>
-              <a style={styles.Button} href="/login">Pesquisar carros</a>
-            </div>
-            <div>
-              <img src="" alt="" />
-            </div>
-            
-          </section>
+      <section style={styles.mainHome}>
+        <div style={styles.mainHomeInfo}>
+          <h1 style={styles.Title}> Compare os detalhes dos mais diversos carros</h1>
+          <a style={styles.Button} href="/login">Pesquisar carros</a>
+        </div>
+        <div style={styles.mainHomeContainerImage}>
+          <div style={styles.mainHomeImage}>
+          <Image
+          priority={true}
+          style={styles.imge}
+          src={'/img/medidor.png'}
+          width={241}
+          height={236}
+          alt="Medidor"/>
+          </div>
+        </div>
+        
+        
+      </section >
 
-          <section>
-            <h2>Carros mais comentados</h2>
-            <CardComent/>
-          </section>
-          <Footer/>
-      </div>
+      <section style={styles.CarHome}>
+      <h2 style={styles.TitleCarHome}>Carros mais comentados</h2>
+        <div style={styles.MaisComentadoCarHome}>
+        <CardComent/>
+        <CardComent/>
+        <CardComent/>
+        <CardComent/>
+        </div>
+        
+        <div style={styles.InfoCarHome}>
+        
+        <Image
+          priority={true}
+          style={styles.ImageInfoCarHome}
+          src={'/img/yellow.png'}
+          width={352}
+          height={352}
+          alt="Carro Amarelo"/>
+
+
+          <h3 style={styles.TextInfoCarHome}>Explore nossa coleção de carros e encontre o par perfeito hoje mesmo.</h3>
+        </div>
+        
+      </section>
+      
+      <Footer />
+  </div>
+    )
   }
   
 }

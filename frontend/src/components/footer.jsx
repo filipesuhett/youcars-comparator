@@ -6,6 +6,7 @@ const styles = {
     display:'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    bottom: '0',
     width: '100vw',
     height: '40px',
     backgroundColor: '#f43030',
@@ -37,7 +38,6 @@ const Footer = (props) => {
   return (
     <div style={styles.Footer} className={props.position ?? 'static'} >
         <p style={styles.TextTitle}>YouCars</p>
-        {console.log(props.position)}
         <p style={styles.Text}>© IFES Serra 2024</p>
     </div>
   );

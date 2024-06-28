@@ -121,7 +121,7 @@ const CardFavorite = (props) => {
             <p style={styles.textinfo}>{props.ano ?? 2024}</p>
         </div>
 
-        <button style={styles.buttonAdicionar}>Adicionar</button>
+        <button style={styles.buttonAdicionar}>Remover</button>
         
     </div>
   );

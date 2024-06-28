@@ -1,3 +1,4 @@
+'use client'
 import Card from "../../components/cardCar.jsx"
 import CardCompare from "../../components/cardCompare.jsx"
 import Footer from "../../components/footer.jsx"
@@ -5,6 +6,7 @@ import Header from "../../components/header.jsx"
 import ResulComp from "../../components/resulComp.jsx"
 import Opinion from "../../components/opinion.jsx"
 import ButtonTeste from "../../components/searchCar.jsx"
+import { useState } from 'react'
 import axios from 'axios';
 
 const api = axios.create({
@@ -64,15 +66,23 @@ const styles = {
 };
 
 
-
-
 export default function Search() {
+  const [ listaCarro, setListaCarro ] = useState([])
+
+  function criarCarros( carros ){
+    setListaCarro( carros )
+  }
+  
+
+
+
   return (
-    <div className=" bg-white flex min-h-screen flex-col items-center justify-between p-24">
+    <div className=" bg-white flex h-screen w-screen flex-col items-center">
         <Header/>
 
-
-        <Footer/>
+        <ButtonTeste criarCarros={criarCarros} />
+        
+        <Footer position='fixed'/>
 
     </div>
     
