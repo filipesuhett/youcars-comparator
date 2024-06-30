@@ -7,6 +7,8 @@ import ResulComp from "../../components/resulComp.jsx"
 import Opinion from "../../components/opinion.jsx"
 import ButtonTeste from "../../components/searchCar.jsx"
 import { useState, useEffect } from 'react'
+import { guardarCarros } from '../../helpers/util.jsx'
+import "../globals.css"
 import axios from 'axios';
 
 const api = axios.create({
@@ -184,6 +186,11 @@ export default function Search() {
     
   }
 
+  async function handleClickCarrosParaComparar(){
+    await guardarCarros( carrosComparador )
+    window.location.href = "/search/compareTool";
+  }
+
   return (
     <div className=" bg-white flex relative h-screen w-screen flex-col items-center">
         <Header/>
@@ -194,7 +201,7 @@ export default function Search() {
             <div style={styles.popupComparatorOptionsCar}>
             {carrosComparador.map((carro) => (<CardCompare key={carro.id} carro={carro} removerCarro={removerComparador} />))}
             </div>
-            <button href="/search/compareTool" style={styles.Button} >Comparar</button>
+            <button style={styles.Button} onClick={handleClickCarrosParaComparar} >Comparar</button>
           </div>
         </div>
         <div style={containerCardOptions}>

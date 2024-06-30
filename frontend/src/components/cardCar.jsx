@@ -1,8 +1,9 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-const imagemCarro = "https://cdn.discordapp.com/attachments/1026594236017160312/1253116567630250034/image.png?ex=6674af3f&is=66735dbf&hm=7f411f909408547bdeae8c15690aaae29adc76b05a5c5245ba28b652d8b990de&"
 import "../app/globals.css"
+import { guardarDetalheCarro } from '../helpers/util.jsx'
+
 const styles = {
   
   Card: {
@@ -16,6 +17,7 @@ const styles = {
     borderRadius: '24px',
     border: '1px solid #030303',
     boxSizing: 'border-box',
+    cursor: 'pointer'
   },
   imge: {
     width:'241px',
@@ -98,8 +100,13 @@ const Card = ({ carro, adicionarComparador }) => {
     adicionarComparador( carro )
   }
 
+  async function handleClickInfoCarro(){
+    await guardarDetalheCarro(carro)
+    window.location.href = "/search/carDetails";
+  }
+
   return (
-    <div style={styles.Card}>
+    <div style={styles.Card} onClick={handleClickInfoCarro}>
         <p style={styles.text}>{`${carro.modelo}  ${carro.versao } ${carro.ano}` ?? "Nome do carro"}</p> 
 
         <Image

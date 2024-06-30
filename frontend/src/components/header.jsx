@@ -67,12 +67,10 @@ const Header = () => {
             <defaultProps.IconComponent />
             <p style={styles.Text}>You Cars</p> 
         </div>
-
-        {/* 
-        Como manda esses botoes para os lugares deles? não sei.
-        */}
+        
         <a style={styles.Button} href="/">Home</a>
         <a style={styles.Button} href="/perfil">Perfil</a>
+        <a style={styles.Button} href="/favoritePage">Favoritos</a>
         
     </div>
   );

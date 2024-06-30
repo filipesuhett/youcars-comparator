@@ -176,6 +176,7 @@ export default function Home() {
           <nav style={styles.Header}>
             <p style={styles.Text}>You Cars</p>
             <a style={styles.TextPerfil} href="/perfil">Perfil</a>
+            <a style={styles.Button} href="/favoritePage">Favoritos</a>
           </nav>
 
           <section style={styles.mainHome}>
