@@ -9,14 +9,6 @@ const styles = {
     alignItems: 'start',
     minHeight: '400px'
   },
-  imge: {
-    width: '191px auto',
-    height: '172px auto',
-    borderRadius: '16px',
-    backgroundPosition: 'center center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-  },
   Text: {
     color: '#030303',
     fontSize: '20px',
@@ -24,22 +16,6 @@ const styles = {
     fontWeight: 600,
     lineHeight: '26px',
     textAlign: 'center',
-  },
-  Button: {
-    cursor: 'pointer',
-    width: '193px',
-    height: '40px',
-    padding: '0px 8px',
-    border: '1px solid #aa93f3',
-    boxSizing: 'border-box',
-    borderRadius: '12px',
-    backgroundColor: '#f43030',
-    color: '#ffffff',
-    fontSize: '20px',
-    fontFamily: 'Manrope',
-    fontWeight: '500',
-    lineHeight: '26px',
-    outline: 'none',
   },
 };
 

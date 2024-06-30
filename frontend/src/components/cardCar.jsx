@@ -106,7 +106,7 @@ const Card = ({ carro, adicionarComparador }) => {
   }
 
   return (
-    <div style={styles.Card} onClick={handleClickInfoCarro}>
+    <div style={styles.Card}>
         <p style={styles.text}>{`${carro.modelo}  ${carro.versao } ${carro.ano}` ?? "Nome do carro"}</p> 
 
         <Image
@@ -115,7 +115,9 @@ const Card = ({ carro, adicionarComparador }) => {
         src={carro.img ?? defaultImage }
         width={241}
         height={236}
-        alt="Picture of the author"/>
+        alt="Picture of the author"
+        onClick={handleClickInfoCarro}
+        />
 
           <div style={styles.infoEadicionar}>
             <div style={styles.preco}>

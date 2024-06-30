@@ -70,7 +70,7 @@ const Header = () => {
         
         <a style={styles.Button} href="/">Home</a>
         <a style={styles.Button} href="/perfil">Perfil</a>
-        <a style={styles.Button} href="/favoritePage">Favoritos</a>
+        <a style={styles.Button} href="/favorite">Favoritos</a>
         
     </div>
   );
