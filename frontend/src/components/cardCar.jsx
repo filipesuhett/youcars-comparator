@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Image from 'next/image';
 const imagemCarro = "https://cdn.discordapp.com/attachments/1026594236017160312/1253116567630250034/image.png?ex=6674af3f&is=66735dbf&hm=7f411f909408547bdeae8c15690aaae29adc76b05a5c5245ba28b652d8b990de&"
@@ -87,18 +88,24 @@ const styles = {
   }
 };
 
+
+
 const defaultImage = "/img/carro.png"
 
-const Card = (props) => {
+const Card = ({ carro, adicionarComparador }) => {
+
+  async function handleClickAddCarro(){
+    adicionarComparador( carro )
+  }
+
   return (
     <div style={styles.Card}>
-
-        <p style={styles.text}>{props.nome ?? "Uno Prateado"}</p> 
+        <p style={styles.text}>{`${carro.modelo}  ${carro.versao } ${carro.ano}` ?? "Nome do carro"}</p> 
 
         <Image
         priority={true}
         style={styles.imge}
-        src={props.urlIMG ?? defaultImage }
+        src={carro.img ?? defaultImage }
         width={241}
         height={236}
         alt="Picture of the author"/>
@@ -106,13 +113,9 @@ const Card = (props) => {
           <div style={styles.infoEadicionar}>
             <div style={styles.preco}>
               <p style={styles.pPreco}>Preço</p>
-              <p>{props.preco ?? "20.50"}</p>
+              <p>{carro.preco ?? "20.50"}</p>
             </div>
-            <div style={styles.like}>
-              <button style={styles.buttonLike}></button>
-              <p>{props.quantidadeLike ?? "2.5k"}</p>
-            </div>
-          <button style={styles.buttonAdicionar}>Adicionar</button>
+          <button style={styles.buttonAdicionar} onClick={handleClickAddCarro}>Adicionar</button>
           </div>
         
     </div>

@@ -75,16 +75,16 @@ const styles = {
 
 const defaultImage = "/img/carro.png"
 
-const ResulComp = (props) => {
+const ResulComp = ({ carro }) => {
   return (
     <div style={styles.Card}>
 
-        <p style={styles.text}>{props.nome ?? "Uno Prateado"}</p> 
+        <p style={styles.text}>{carro.modelo ?? "Uno Prateado"}</p> 
 
         <Image
         priority={true}
         style={styles.imge}
-        src={props.urlIMG ?? defaultImage }
+        src={carro.img ?? defaultImage }
         width={241}
         height={236}
         alt="Picture of the author"/>
@@ -94,47 +94,47 @@ const ResulComp = (props) => {
             
             <div style={styles.informacoes}>
                 <p style={styles.textInfo}>Marca</p>
-                <p style={styles.textresult}>{props.marca ?? "Honda"}</p>
+                <p style={styles.textresult}>{carro.marca ?? "Honda"}</p>
             </div>
             
             <div style={styles.informacoes}>
             <p style={styles.textInfo}>Modelo</p>
-            <p style={styles.textresult}>{props.modelo ?? "modelo"}</p>
+            <p style={styles.textresult}>{carro.modelo ?? "modelo"}</p>
             </div>
             
             <div style={styles.informacoes}>
             <p style={styles.textInfo}>Ano</p>
-            <p style={styles.textresult}>{props.ano ?? "xx/xx/xxxx"}</p>
+            <p style={styles.textresult}>{carro.ano ?? "xx/xx/xxxx"}</p>
             </div>
             
             <div style={styles.informacoes}> 
             <p style={styles.textInfo}>Preço</p>
-            <p style={styles.textresult}>{props.preco ?? "preco"}</p>
+            <p style={styles.textresult}>{carro.preco ?? "preco"}</p>
             </div>
             
             <div style={styles.informacoes}>
             <p style={styles.textInfo}>Consumo</p>
-            <p style={styles.textresult}>{props.consumoCidade ?? "consumoCITY"}</p>
+            <p style={styles.textresult}>{carro.consucidade ?? "consumoCITY"}</p>
             </div>
 
             <div style={styles.informacoes}>
             <p style={styles.textInfo}>Consumo</p>
-            <p style={styles.textresult}>{props.consumoEstrada ?? "consumo"}</p>
+            <p style={styles.textresult}>{carro.consuestrada ?? "consumo"}</p>
             </div>
             
             <div style={styles.informacoes}>
             <p style={styles.textInfo}>Cavalos</p>
-            <p style={styles.textresult}>{props.cavalos ?? "cavalos"}</p>
+            <p style={styles.textresult}>{carro.cavalos ?? "cavalos"}</p>
             </div>
 
             <div style={styles.informacoes}>
             <p style={styles.textInfo}>Direção</p>
-            <p style={styles.textresult}>{props.direcao ?? "direcao"}</p>
+            <p style={styles.textresult}>{carro.direcao ?? "direcao"}</p>
             </div>
             
             <div style={styles.informacoes}>
             <p style={styles.textInfo}>Freio</p>
-            <p style={styles.textresult}>{props.freio ?? "freio"}</p>  
+            <p style={styles.textresult}>{carro.freio ?? "freio"}</p>  
             </div>
 
             

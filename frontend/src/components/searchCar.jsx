@@ -2,6 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react'
+import { useEffect } from 'react';
 import "../app/globals.css"
 import {getUser, getPassword} from '../helpers/util.jsx'
 
@@ -11,6 +12,32 @@ const api = axios.create({
 
 
   const styles = {
+    Card1: {
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+      width: '418px',
+      minHeight: '200px',
+      backgroundColor: '#fff',
+      borderRadius: '8px',
+      boxSizing: 'border-box',
+      gap: '20px',
+      border: '5px solid #505050',
+      padding: '50px 0 50px 0 ',
+    },
+    Card2: {
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+      width: '418px',
+      minHeight: '200px',
+      backgroundColor: '#fff',
+      borderRadius: '8px',
+      boxSizing: 'border-box',
+      gap: '20px',
+      border: 'none',
+      padding: '50px 0 50px 0 ',
+    },
     Button: {
       cursor: 'pointer',
       top: '656px',
@@ -29,11 +56,6 @@ const api = axios.create({
       lineHeight: '29px',
       outline: 'none',
     },
-    containerOptions: {
-      width: '418px',
-      height: '518px',
-      backgroundColor: '#fff',
-    },
     Text: {
       color: '#000000',
       fontSize: '24px',
@@ -41,10 +63,8 @@ const api = axios.create({
       fontWeight: '500',
       lineHeight: '31px',
     },
-    Dropdown: {
+    Dropdown1: {
       cursor: 'pointer',
-      top: '279px',
-      left: '73px',
       width: '309px',
       height: '52px',
       margin: '10px',
@@ -61,6 +81,9 @@ const api = axios.create({
       lineHeight: '20px',
       outline: 'none',
     },
+    Dropdown2: {
+      display:'none'
+    }
   };
 
 
@@ -74,10 +97,27 @@ const Buttonteste = (props) => {
     const [anos, setAnos ] = useState([])
     const [ano, setAno ] = useState('')
 
-    const [carros, setCarros ] = useState([])
+    const [ borderOptions, setborderOptions ] = useState([])
+    const [ dropdownMarca, setdropdownMarca ] = useState([])
+    const [ dropdownModelo, setdropdownModelo ] = useState([])
+    const [ dropdownAno, setdropdownAno ] = useState([])
 
-    const login = getUser()
-    const senha = getPassword()
+
+    let login = ''
+    let senha = ''
+
+    useEffect(() => {
+      login = getUser()
+      senha = getPassword()
+
+      setborderOptions(styles.Card1)
+      setdropdownMarca(styles.Dropdown1)
+      setdropdownModelo(styles.Dropdown2)
+      setdropdownAno(styles.Dropdown2)
+    }, []);
+
+    
+    
 
     async function handleClickGetMarcas(){
         
@@ -93,9 +133,11 @@ const Buttonteste = (props) => {
       .then(response => {
         console.log('Resposta do servidor:', response.data);
           setMarcas(response.data)
+          setdropdownModelo( styles.Dropdown1 )
       }).catch(erro => {
           alert("Erro ao buscar as Marcas")
       })
+      
     }
 
     async function handleClickGetModelo(){
@@ -114,6 +156,7 @@ const Buttonteste = (props) => {
       .then(response => {
         console.log('Resposta do servidor:', response.data);
           setModelos(response.data)
+          setdropdownAno( styles.Dropdown1 )
       }).catch(erro => {
           alert("Erro ao buscar os Modelos")
       })
@@ -143,6 +186,8 @@ const Buttonteste = (props) => {
     }
 
     async function handleClickPesquisarCarro(){
+
+      setborderOptions(styles.Card2)
         
       await api({
         method: 'post',
@@ -161,25 +206,27 @@ const Buttonteste = (props) => {
       .then(response => {
         console.log('Resposta do servidor:', response.data);
         props.criarCarros(response.data)
+        setdropdownModelo( styles.Dropdown2 )
+        setdropdownAno( styles.Dropdown2 )
       }).catch(erro => {
           alert("Erro ao buscar os Modelos")
       })
     }
 
   return (
-    <div className='flex flex-col'>
+    <div style={borderOptions}>
       
-            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetMarcas} onChange={(e) => setMarca(e.target.value)}>
+            <select style={dropdownMarca} defaultValue="" onClick={handleClickGetMarcas} onChange={(e) => setMarca(e.target.value)}>
               <option value=""> {props.label ?? `Selecione uma Marca` }</option>
               {marcas.map((value) => (<option value={value.marca} key={value.marca}>{value.marca}</option>))}
             </select>
 
-            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetModelo}  onChange={(e) => setModelo(e.target.value)}>
+            <select style={dropdownModelo} defaultValue="" onClick={handleClickGetModelo}  onChange={(e) => setModelo(e.target.value)}>
               <option value="" > {props.label ?? `Selecione um Modelo` }</option>
               {modelos.map((value) => (<option value={value.modelo} key={value.modelo}>{value.modelo}</option>))}
             </select>
 
-            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetAno} onChange={(e) => setAno(e.target.value)}>
+            <select style={dropdownAno} defaultValue="" onClick={handleClickGetAno} onChange={(e) => setAno(e.target.value)}>
               <option value="" > {props.label ?? `Selecione um Ano` }</option>
               {anos.map((value) => (<option value={value.ano} key={value.ano} >{value.ano}</option>))}
             </select>

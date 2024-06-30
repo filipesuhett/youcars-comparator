@@ -1,3 +1,4 @@
+'use client'
 import Footer from "../../../components/footer.jsx"
 import Header from "../../../components/header.jsx"
 import ResulComp from "../../../components/resulComp.jsx"
@@ -25,18 +26,10 @@ const styles = {
   }
 }
 export default function Search() {
-
   return (
     <div className="flex h-screen w-screen flex-col items-center bg-white">
           <Header />
           <h1 style={styles.Text}>Resultado da Comparação</h1>
-            <div style={styles.ContainerResult}>
-              <ResulComp />
-              <p style={styles.Text}>VS</p>
-              <ResulComp />
-              <p style={styles.Text}>VS</p>
-              <ResulComp />
-            </div>
           <Footer position="fixed bottom-0" />
     </div>
     
