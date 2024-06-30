@@ -1,9 +1,6 @@
-'use client';
 import React from 'react';
 import Image from 'next/image';
 import "../app/globals.css"
-import { guardarDetalheCarro } from '../helpers/util.jsx'
-
 const styles = {
   
   Card: {
@@ -11,13 +8,12 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: "Column",
-    width: '273px',
-    height: '454px',
+    width: '306px',
+    height: '324px',
     backgroundColor: '#e5e7eb',
     borderRadius: '24px',
     border: '1px solid #030303',
     boxSizing: 'border-box',
-    cursor: 'pointer'
   },
   imge: {
     width:'241px',
@@ -90,29 +86,18 @@ const styles = {
   }
 };
 
-
-
 const defaultImage = "/img/carro.png"
 
-const Card = ({ carro, adicionarComparador }) => {
-
-  async function handleClickAddCarro(){
-    adicionarComparador( carro )
-  }
-
-  async function handleClickInfoCarro(){
-    await guardarDetalheCarro(carro)
-    window.location.href = "/search/carDetails";
-  }
-
+const CardComent = (props) => {
   return (
-    <div style={styles.Card} onClick={handleClickInfoCarro}>
-        <p style={styles.text}>{`${carro.modelo}  ${carro.versao } ${carro.ano}` ?? "Nome do carro"}</p> 
+    <div style={styles.Card}>
+
+        <p style={styles.text}>{props.nome ?? "Uno Prateado"}</p> 
 
         <Image
         priority={true}
         style={styles.imge}
-        src={carro.img ?? defaultImage }
+        src={props.urlIMG ?? defaultImage }
         width={241}
         height={236}
         alt="Picture of the author"/>
@@ -120,13 +105,15 @@ const Card = ({ carro, adicionarComparador }) => {
           <div style={styles.infoEadicionar}>
             <div style={styles.preco}>
               <p style={styles.pPreco}>Preço</p>
-              <p>{carro.preco ?? "20.50"}</p>
+              <p>{props.preco ?? "20.50"}</p>
             </div>
-          <button style={styles.buttonAdicionar} onClick={handleClickAddCarro}>Adicionar</button>
+            <div style={styles.like}>
+              <p>{props.quantidadeLike ?? "2.5k"}</p>
+            </div>
           </div>
         
     </div>
   );
 };
 
-export default Card;
+export default CardComent;

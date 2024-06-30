@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import Image from 'next/image';
 
@@ -14,8 +15,8 @@ const styles = {
     boxSizing: 'border-box',
   },
   imge: {
-    width: '191px',
-    height: '172px',
+    width: '191px auto',
+    height: '172px auto',
     borderRadius: '16px',
     backgroundPosition: 'center center',
     backgroundSize: 'cover',
@@ -47,26 +48,31 @@ const styles = {
   },
 };
 
+
+
 const defaultImage = "/img/carro.png"
-const CardCompare = (props) => {
+const CardCompare = ( { carro, removerCarro } ) => {
+
+  function handleClickRemoveCarro(){
+    removerCarro(carro)
+  }
+
   return (
     <div style={styles.Card}>
 
-        {/* 
-        Eu só copiei a forma que marlin fez imagem em cardCars......
-        */}
       
       <Image
         priority={true}
         style={styles.imge}
-        src={props.urlIMG ?? defaultImage }
+        src={carro.img ?? defaultImage }
         width={191}
         height={236}
         alt="Picture of the author"/>
 
-        <p style={styles.Text}>{props.nome ?? "Nome do carro"}</p> 
+        <p style={styles.Text}>{`${carro.modelo}  ${carro.versao} ${carro.ano}` ?? "Nome do carro"}</p> 
+        <p style={styles.Text}>{`Preço: ${carro.preco}` ?? "Preco do carro"}</p> 
 
-        <button style={styles.Button}>Remover</button>
+        <button style={styles.Button} onClick={handleClickRemoveCarro}>Remover</button>
 
 
     </div>

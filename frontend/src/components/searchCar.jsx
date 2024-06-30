@@ -2,6 +2,9 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react'
+import { useEffect } from 'react';
+import "../app/globals.css"
+import {getUser, getPassword} from '../helpers/util.jsx'
 
 const api = axios.create({
     baseURL: 'http://localhost:3001'
@@ -9,6 +12,32 @@ const api = axios.create({
 
 
   const styles = {
+    Card1: {
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+      width: '418px',
+      minHeight: '200px',
+      backgroundColor: '#fff',
+      borderRadius: '8px',
+      boxSizing: 'border-box',
+      gap: '20px',
+      border: '5px solid #505050',
+      padding: '50px 0 50px 0 ',
+    },
+    Card2: {
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+      width: '418px',
+      minHeight: '200px',
+      backgroundColor: '#fff',
+      borderRadius: '8px',
+      boxSizing: 'border-box',
+      gap: '20px',
+      border: 'none',
+      padding: '50px 0 50px 0 ',
+    },
     Button: {
       cursor: 'pointer',
       top: '656px',
@@ -22,15 +51,10 @@ const api = axios.create({
       backgroundColor: '#f43030',
       color: '#ffffff',
       fontSize: '22px',
-      fontFamily: 'Source Sans Pro',
+      fontFamily: 'Source Sans 3',
       fontWeight: '500',
       lineHeight: '29px',
       outline: 'none',
-    },
-    containerOptions: {
-      width: '418px',
-      height: '518px',
-      backgroundColor: '#fff',
     },
     Text: {
       color: '#000000',
@@ -39,12 +63,11 @@ const api = axios.create({
       fontWeight: '500',
       lineHeight: '31px',
     },
-    Dropdown: {
+    Dropdown1: {
       cursor: 'pointer',
-      top: '279px',
-      left: '73px',
       width: '309px',
       height: '52px',
+      margin: '10px',
       padding: '0px 8px',
       border: '0',
       boxSizing: 'border-box',
@@ -53,60 +76,162 @@ const api = axios.create({
       backgroundColor: '#f5f5f5',
       color: '#919191',
       fontSize: '16px',
-      fontFamily: 'Source Sans Pro',
+      fontFamily: 'Source Sans 3',
       fontWeight: 500,
       lineHeight: '20px',
       outline: 'none',
     },
+    Dropdown2: {
+      display:'none'
+    }
   };
 
 
 const Buttonteste = (props) => {
-    const [marca, setMarca ] = useState([])
-    const [modelo, setModelo ] = useState([])
-    const [ano, setAno ] = useState([])
+    const [marcas, setMarcas ] = useState([])
+    const [marca, setMarca ] = useState('')
 
-    function handleClickGetMarca(){
+    const [modelos, setModelos ] = useState([])
+    const [modelo, setModelo ] = useState('')
+
+    const [anos, setAnos ] = useState([])
+    const [ano, setAno ] = useState('')
+
+    const [ borderOptions, setborderOptions ] = useState([])
+    const [ dropdownMarca, setdropdownMarca ] = useState([])
+    const [ dropdownModelo, setdropdownModelo ] = useState([])
+    const [ dropdownAno, setdropdownAno ] = useState([])
+
+
+    let login = ''
+    let senha = ''
+
+    useEffect(() => {
+      login = getUser()
+      senha = getPassword()
+
+      setborderOptions(styles.Card1)
+      setdropdownMarca(styles.Dropdown1)
+      setdropdownModelo(styles.Dropdown2)
+      setdropdownAno(styles.Dropdown2)
+    }, []);
+
+    
+    
+
+    async function handleClickGetMarcas(){
         
-      api.get('/car/marca').then((dado)=>{
-      setMarca(dado.data)
+      await api({
+        method: 'post',
+        url:'/api/brand',
+        auth:{
+          username:login,
+          password:senha
+        }
+        
+      })
+      .then(response => {
+        console.log('Resposta do servidor:', response.data);
+          setMarcas(response.data)
+          setdropdownModelo( styles.Dropdown1 )
+      }).catch(erro => {
+          alert("Erro ao buscar as Marcas")
+      })
+      
+    }
+
+    async function handleClickGetModelo(){
+      await api({
+        method: 'post',
+        url:'/api/model',
+        auth:{
+          username:login,
+          password:senha
+        },
+        data: {
+          marca: marca
+        }
+        
+      })
+      .then(response => {
+        console.log('Resposta do servidor:', response.data);
+          setModelos(response.data)
+          setdropdownAno( styles.Dropdown1 )
+      }).catch(erro => {
+          alert("Erro ao buscar os Modelos")
       })
     }
 
-    function handleClickGetModelo(){
+    async function handleClickGetAno(){
         
-      api.get('/car/modelo').then((dado)=>{
-      setModelo(dado.data)
+      await api({
+        method: 'post',
+        url:'/api/year',
+        auth:{
+          username:login,
+          password:senha
+        },
+        data: {
+          marca: marca,
+          modelo: modelo
+        }
+        
+      })
+      .then(response => {
+        console.log('Resposta do servidor:', response.data);
+          setAnos(response.data)
+      }).catch(erro => {
+          alert("Erro ao buscar os Modelos")
       })
     }
 
-    function handleClickGetAno(){
+    async function handleClickPesquisarCarro(){
+
+      setborderOptions(styles.Card2)
         
-      api.get('/car/ano').then((dado)=>{
-      setAno(dado.data)
+      await api({
+        method: 'post',
+        url:'/api/filtercar',
+        auth:{
+          username:login,
+          password:senha
+        },
+        data: {
+          marca: marca,
+          modelo: modelo,
+          ano: ano
+        }
+        
+      })
+      .then(response => {
+        console.log('Resposta do servidor:', response.data);
+        props.criarCarros(response.data)
+        setdropdownModelo( styles.Dropdown2 )
+        setdropdownAno( styles.Dropdown2 )
+      }).catch(erro => {
+          alert("Erro ao buscar os Modelos")
       })
     }
 
   return (
-    <div >
+    <div style={borderOptions}>
       
-            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetMarca}>
-              <option value="" > {props.label ?? `Selecione uma Marca` }</option>
-              {marca.map((value) => (<option value={value.marca} key={value.marca}>{value.marca}</option>))}
+            <select style={dropdownMarca} defaultValue="" onClick={handleClickGetMarcas} onChange={(e) => setMarca(e.target.value)}>
+              <option value=""> {props.label ?? `Selecione uma Marca` }</option>
+              {marcas.map((value) => (<option value={value.marca} key={value.marca}>{value.marca}</option>))}
             </select>
 
-            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetModelo}>
+            <select style={dropdownModelo} defaultValue="" onClick={handleClickGetModelo}  onChange={(e) => setModelo(e.target.value)}>
               <option value="" > {props.label ?? `Selecione um Modelo` }</option>
-              {modelo.map((value) => (<option value={value.modelo} key={value.modelo}>{value.modelo}</option>))}
+              {modelos.map((value) => (<option value={value.modelo} key={value.modelo}>{value.modelo}</option>))}
             </select>
 
-            <select style={styles.Dropdown} defaultValue="" onClick={handleClickGetAno}>
-              <option value="" > {props.label ?? `Selecione uma Ano` }</option>
-              {ano.map((value) => (<option value={value.ano} key={value.ano}>{value.ano}</option>))}
+            <select style={dropdownAno} defaultValue="" onClick={handleClickGetAno} onChange={(e) => setAno(e.target.value)}>
+              <option value="" > {props.label ?? `Selecione um Ano` }</option>
+              {anos.map((value) => (<option value={value.ano} key={value.ano} >{value.ano}</option>))}
             </select>
 
-            <button style={styles.Button} >Pesquisar</button>
-
+            <button style={styles.Button} onClick={handleClickPesquisarCarro}>Pesquisar</button>
     </div>
   );
 };

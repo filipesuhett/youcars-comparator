@@ -1,16 +1,13 @@
 import React from 'react';
+import "../app/globals.css"
 
 const styles = {
   Header: {
     display: 'Flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    //esse row aqui procede ou eu errei? Aliais, teria q colocar um paddind nas coisas ou só fixar elas nos devidos lugares da navBar?
-    flexDirection: "Row",
-    position: 'fixed',
-    top: '0px',
-    left: '0px',
-    width: '100%',
+    position: 'static',
+    width: '100vw',
     height: '64px',
     backgroundColor: '#f43030',
   },
@@ -25,6 +22,9 @@ const styles = {
     
   },
   Button: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     cursor: 'pointer',
     width: '120px',
     height: '32px',
@@ -35,7 +35,7 @@ const styles = {
     
     color: '#ffffff',
     fontSize: '18px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     fontWeight: 400,
     lineHeight: '24px',
     outline: 'none',
@@ -43,7 +43,7 @@ const styles = {
   Text: {
     color: '#ffffff',
     fontSize: '18px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     fontWeight: 400,
     lineHeight: '24px',
   },
@@ -67,12 +67,10 @@ const Header = () => {
             <defaultProps.IconComponent />
             <p style={styles.Text}>You Cars</p> 
         </div>
-
-        {/* 
-        Como manda esses botoes para os lugares deles? não sei.
-        */}
-        <button style={styles.Button}>Home</button>
-        <button style={styles.Button}>Perfil</button>
+        
+        <a style={styles.Button} href="/">Home</a>
+        <a style={styles.Button} href="/perfil">Perfil</a>
+        <a style={styles.Button} href="/favoritePage">Favoritos</a>
         
     </div>
   );

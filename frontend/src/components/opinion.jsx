@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import "../app/globals.css"
 
 const styles = {
   
@@ -19,19 +20,19 @@ const styles = {
   date:{
     color: '#919191',
     fontSize: '12px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     lineHeight: '16px',
   },
   text: {
     color: '#030303',
     fontSize: '16px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     lineHeight: '24px',
   },
   name:{
     color: '#030303',
     fontSize: '16px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     lineHeight: '24px',
     fontWeight: 'bold'
   },
@@ -50,9 +51,13 @@ const styles = {
 
 };
 
-const defaultImage = "/img/carro.png"
 
 const Opinion = (props) => {
+
+  const pegarComentarios = async (event) =>{
+    
+  }
+
   return (
     <div style={styles.Card}>
         
@@ -65,12 +70,7 @@ const Opinion = (props) => {
       
       <div style={styles.cantinho}>
         <p style={styles.date}>{props.date ?? "20/04/2023 20:20"}</p>
-      </div>
-
-      
-      
-      
-        
+      </div>  
     </div>
   );
 };

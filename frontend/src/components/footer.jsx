@@ -1,13 +1,12 @@
 import React from 'react';
+import "../app/globals.css"
 
 const styles = {
   Footer: {
     display:'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'fixed',
-    bottom: '0px',
-    left: '0px',
+    bottom: '0',
     width: '100vw',
     height: '40px',
     backgroundColor: '#f43030',
@@ -15,7 +14,7 @@ const styles = {
   TextTitle: {
     color: '#030303',
     fontSize: '12px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     fontWeight: 600,
     lineHeight: '22px',
     textAlign: 'left',
@@ -25,7 +24,7 @@ const styles = {
   Text: {
     color: '#030303',
     fontSize: '12px',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'Source Sans 3',
     fontWeight: 300,
     lineHeight: '16px',
     textAlign: 'right',
@@ -34,11 +33,11 @@ const styles = {
   },
 };
 
-const Footer = () => {
+const Footer = (props) => {
+  
   return (
-    <div style={styles.Footer}>
+    <div style={styles.Footer} className={props.position ?? 'static'} >
         <p style={styles.TextTitle}>YouCars</p>
-
         <p style={styles.Text}>© IFES Serra 2024</p>
     </div>
   );

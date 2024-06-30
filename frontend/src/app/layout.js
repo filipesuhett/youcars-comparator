@@ -7,7 +7,6 @@ export const metadata = {
   title: "You Cars",
   description: "Criado Pelos Alunos de BSI IFES Serra",
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">

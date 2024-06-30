@@ -3,7 +3,8 @@ const db = require('../config/database');
 exports.searchBrand = async (req, res) => {
     try {
         const getBrand = await db.query('SELECT DISTINCT marca FROM Carro');
-        return res.json(getBrand.rows);
+        return res.status(200).json(getBrand.rows)
+
     } catch (err) {
         console.error('Error executing query', err.stack);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -23,7 +24,7 @@ exports.searchModel = async (req, res) => {
 
     try {
         const getModel = await db.query('SELECT DISTINCT modelo FROM Carro WHERE marca = $1', [marca]);
-        return res.json(getModel.rows);
+        return res.status(200).json(getModel.rows);
     } catch (err) {
         console.error('Error executing query', err.stack);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -43,7 +44,7 @@ exports.searchYear = async (req, res) => {
 
     try {
         const getYear = await db.query('SELECT DISTINCT ano FROM Carro WHERE marca = $1 AND modelo = $2', [marca, modelo]);
-        return res.json(getYear.rows);
+        return res.status(200).json(getYear.rows);
     } catch (err) {
         console.error('Error executing query', err.stack);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -71,7 +72,7 @@ exports.searchFilterCar = async (req, res) => {
                     erro: 'nehum carro encontrado'
                 });
             }
-            return res.json(getFilterCar.rows);
+            return res.status(200).json(getFilterCar.rows);
         }
 
         else if (ano == 0) {
@@ -83,7 +84,7 @@ exports.searchFilterCar = async (req, res) => {
                     erro: 'nehum carro encontrado'
                 });
             }
-            return res.json(getFilterCar.rows);
+            return res.status(200).json(getFilterCar.rows);
         }
 
         else {
@@ -95,7 +96,7 @@ exports.searchFilterCar = async (req, res) => {
                     erro: 'nehum carro encontrado'
                 });
             }
-            return res.json(getFilterCar.rows);
+            return res.status(200).json(getFilterCar.rows);
         }
     } catch (err) {
         console.error('Error executing query', err.stack);

@@ -5,7 +5,7 @@ exports.registerUser = async (req, res) => {
     if(req.body.hasOwnProperty('novo_login') && req.body.hasOwnProperty('nova_senha')) {
         
         const { novo_login, nova_senha} = req.body;
-
+        console.log(novo_login, nova_senha)
         var senha = bcrypt.hash(nova_senha);
 
         const hasUserQuery = await db.query(
@@ -38,7 +38,7 @@ exports.registerUser = async (req, res) => {
             }
         }
         else {
-            var errorMsg = "usuario ja cadastrado";
+            var errorMsg = "usuario ja está cadastrado";
             res.status(200).send(
                 {
                     sucesso : 0,
