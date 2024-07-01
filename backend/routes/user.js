@@ -12,10 +12,19 @@ var challangeAuth = basicAuth(
     }
 );
 
+const addUserToRequest = (req, res, next) => {
+    if (req.auth && req.auth.user) {
+        req.user = { login: req.auth.user };
+    }
+    next();
+};
+
 router.post('/registrar', userController.registerUser);
 
 router.post('/login', challangeAuth, function(req, res) {
     res.status(200).send({ sucesso : 1 });
 } );
+router.post('/trocar_senha', challangeAuth, addUserToRequest, userController.changePassword);
+router.post('/deletar_usuario', challangeAuth, addUserToRequest, userController.deleteUser);
 
 module.exports = router;

@@ -19,6 +19,9 @@ var challangeAuth = basicAuth(
 // router.get('/brand', comment.searchBrand);
 router.post('/add_comment', challangeAuth, comment.addComment);
 router.post('/remove_comment', challangeAuth, comment.removeComment);
+router.get('/list_comment_user', challangeAuth, comment.listCommentUser);
+router.get('/list_comment_car', challangeAuth, comment.listCommentCar); 
+
 
 
 module.exports = router;
