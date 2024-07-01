@@ -2,14 +2,6 @@ const db = require('../config/database');
 
 exports.addComment = async (req, res) => {
     const { id_carro, usuario, comentario } = req.body;
-    const checkCarQuery = await db.query(
-        "SELECT COUNT(*) AS count_cars FROM Carro WHERE id = $1",
-        [id_carro]
-    )
-    const checkUserQuery = await db.query(
-        "SELECT COUNT(*) AS count_users FROM Usuario WHERE login = $1",
-        [usuario]
-    )
 
     if (!id_carro || !usuario || !comentario) {
         return res.status(200).send({
@@ -25,6 +17,16 @@ exports.addComment = async (req, res) => {
             erro: 'usuario ou carro nao existe'
         });
     }
+
+    const checkCarQuery = await db.query(
+        "SELECT COUNT(*) AS count_cars FROM Carro WHERE id = $1",
+        [id_carro]
+    )
+    const checkUserQuery = await db.query(
+        "SELECT COUNT(*) AS count_users FROM Usuario WHERE login = $1",
+        [usuario]
+    )
+
     try {
         const checkCommentQuery = await db.query(
             "SELECT COUNT(*) AS count_comments FROM Comentario WHERE usuario_id = (SELECT id FROM Usuario WHERE login = $1) AND carro_id = $2",
@@ -99,4 +101,84 @@ exports.removeComment = async (req, res) => {
     }
 }
 
-    
+exports.listCommentUser = async (req, res) => {
+    if ('usuario_id' in req.body) {
+        const { usuario_id } = req.body;
+
+        try {
+            const getAllFavoritesQuery = await db.query(
+                "SELECT * FROM comentario WHERE usuario_id = $1",
+                [usuario_id]
+            );
+
+            if (getAllFavoritesQuery.rows.length !== 0) {
+                res.status(200).send({
+                    sucesso: 1,
+                    comentarios: getAllFavoritesQuery.rows,
+                    qtde_comentarios: getAllFavoritesQuery.rows.length
+                });
+            } else {
+                res.status(200).send({
+                    sucesso: 1,
+                    comentarios: [],
+                    qtde_comentarios: 0
+                });
+            }
+        } catch (err) {
+            const errorMsg = "Erro BD: " + err;
+            res.status(200).send({
+                sucesso: 0,
+                cod_erro: 2,
+                erro: errorMsg
+            });
+        }
+    } else {
+        const errorMsg = "Faltam parâmetros";
+        res.status(200).send({
+            sucesso: 0,
+            cod_erro: 3,
+            erro: errorMsg
+        });
+    }
+};
+
+exports.listCommentCar = async (req, res) => {
+    if ('carro_id' in req.body) {
+        const { carro_id } = req.body;
+
+        try {
+            const getAllFavoritesQuery = await db.query(
+                "SELECT * FROM comentario WHERE carro_id = $1",
+                [carro_id]
+            );
+
+            if (getAllFavoritesQuery.rows.length !== 0) {
+                res.status(200).send({
+                    sucesso: 1,
+                    comentarios: getAllFavoritesQuery.rows,
+                    qtde_comentarios: getAllFavoritesQuery.rows.length
+                });
+            } else {
+                res.status(200).send({
+                    sucesso: 1,
+                    comentarios: [],
+                    qtde_comentarios: 0
+                });
+            }
+        } catch (err) {
+            const errorMsg = "Erro BD: " + err;
+            res.status(200).send({
+                sucesso: 0,
+                cod_erro: 2,
+                erro: errorMsg
+            });
+        }
+    } else {
+        const errorMsg = "Faltam parâmetros";
+        res.status(200).send({
+            sucesso: 0,
+            cod_erro: 3,
+            erro: errorMsg
+        });
+    }
+};

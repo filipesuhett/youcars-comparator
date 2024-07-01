@@ -5,9 +5,6 @@ const searchCar = require('../controllers/searchCar');
 
 const auth = require('../controllers/auth');
 
-// const multer = require('multer');
-// const upload = multer({ dest : 'uploads'});
-
 var challangeAuth = basicAuth( 
     {
         authorizer : auth.authenticate,
@@ -17,10 +14,10 @@ var challangeAuth = basicAuth(
 );
 
 // router.get('/brand', searchCar.searchBrand);
-router.post('/brand', challangeAuth, searchCar.searchBrand);
-router.post('/model', challangeAuth, searchCar.searchModel);
-router.post('/year', challangeAuth,searchCar.searchYear)
-router.post('/filtercar', challangeAuth,searchCar.searchFilterCar)
+router.get('/brand', challangeAuth, searchCar.searchBrand);
+router.get('/model', challangeAuth, searchCar.searchModel);
+router.get('/year', challangeAuth,searchCar.searchYear)
+router.get('/filtercar', challangeAuth,searchCar.searchFilterCar)
 
 
 module.exports = router;
