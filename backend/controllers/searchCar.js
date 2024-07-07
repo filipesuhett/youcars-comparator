@@ -3,8 +3,7 @@ const db = require('../config/database');
 exports.searchBrand = async (req, res) => {
     try {
         const getBrand = await db.query('SELECT DISTINCT marca FROM Carro');
-        return res.status(200).json(getBrand.rows)
-
+        return res.status(200).json(getBrand.rows);
     } catch (err) {
         console.error('Error executing query', err.stack);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -12,7 +11,7 @@ exports.searchBrand = async (req, res) => {
 }
 
 exports.searchModel = async (req, res) => {
-    const { marca } = req.body;
+    const { marca } = req.query;
 
     if (!marca) {
         return res.status(200).send({
@@ -32,7 +31,7 @@ exports.searchModel = async (req, res) => {
 }
 
 exports.searchYear = async (req, res) => {
-    const { marca, modelo } = req.body;
+    const { marca, modelo } = req.query;
 
     if (!marca || !modelo) {
         return res.status(200).send({
@@ -52,7 +51,7 @@ exports.searchYear = async (req, res) => {
 }
 
 exports.searchFilterCar = async (req, res) => {
-    const { marca, modelo, ano } = req.body;
+    const { marca, modelo, ano } = req.query;
 
     if (!marca) {
         return res.status(200).send({
@@ -63,49 +62,43 @@ exports.searchFilterCar = async (req, res) => {
     }
 
     try {
-        if (ano == '' && modelo == '') {
+        if (ano === '' && modelo === '') {
             const getFilterCar = await db.query('SELECT * FROM Carro WHERE marca = $1', [marca]);
             if (!getFilterCar) {
                 return res.status(200).send({
                     sucesso: 0,
                     cod_erro: 1,
-                    erro: 'nehum carro encontrado'
+                    erro: 'nenhum carro encontrado'
                 });
             }
             return res.status(200).json(getFilterCar.rows);
-        }
-
-        else if (ano == '') {
+        } else if (ano === '') {
             const getFilterCar = await db.query('SELECT * FROM Carro WHERE marca = $1 AND modelo = $2', [marca, modelo]);
             if (!getFilterCar) {
                 return res.status(200).send({
                     sucesso: 0,
                     cod_erro: 1,
-                    erro: 'nehum carro encontrado'
+                    erro: 'nenhum carro encontrado'
                 });
             }
             return res.status(200).json(getFilterCar.rows);
-        }
-
-        else if (modelo == '') {
+        } else if (modelo === '') {
             const getFilterCar = await db.query('SELECT * FROM Carro WHERE marca = $1 AND ano = $2', [marca, ano]);
             if (!getFilterCar) {
                 return res.status(200).send({
                     sucesso: 0,
                     cod_erro: 1,
-                    erro: 'nehum carro encontrado'
+                    erro: 'nenhum carro encontrado'
                 });
             }
             return res.status(200).json(getFilterCar.rows);
-        }
-
-        else {
+        } else {
             const getFilterCar = await db.query('SELECT * FROM Carro WHERE marca = $1 AND modelo = $2 AND ano = $3', [marca, modelo, ano]);
             if (!getFilterCar) {
                 return res.status(200).send({
                     sucesso: 0,
                     cod_erro: 1,
-                    erro: 'nehum carro encontrado'
+                    erro: 'nenhum carro encontrado'
                 });
             }
             return res.status(200).json(getFilterCar.rows);

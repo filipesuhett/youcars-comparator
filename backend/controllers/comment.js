@@ -143,8 +143,8 @@ exports.listCommentUser = async (req, res) => {
 };
 
 exports.listCommentCar = async (req, res) => {
-    if ('carro_id' in req.body) {
-        const { carro_id } = req.body;
+    if ('carro_id' in req.query) {
+        const { carro_id } = req.query;
 
         try {
             const getAllFavoritesQuery = await db.query(
