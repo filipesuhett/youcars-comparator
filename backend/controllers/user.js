@@ -118,59 +118,47 @@ exports.changePassword = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-    if (req.body.hasOwnProperty('login')) {
-        const { login } = req.body;
+    try {
+        const result = await db.query(
+            "SELECT id FROM Usuario WHERE login = $1",
+            [req.user.login]
+        );
 
-        try {
-            const result = await db.query(
-                "SELECT id FROM Usuario WHERE login = $1",
-                [login]
+        if (result.rows.length > 0) {
+            const userId = result.rows[0].id;
+
+            // Delete from Favoritos first
+            await db.query(
+                "DELETE FROM Favoritos WHERE usuario_id = $1",
+                [userId]
             );
 
-            if (result.rows.length > 0) {
-                const userId = result.rows[0].id;
+            // Delete from Usuario
+            await db.query(
+                "DELETE FROM Usuario WHERE id = $1",
+                [userId]
+            );
 
-                // Delete from Favoritos first
-                await db.query(
-                    "DELETE FROM Favoritos WHERE usuario_id = $1",
-                    [userId]
-                );
-
-                // Delete from Usuario
-                await db.query(
-                    "DELETE FROM Usuario WHERE id = $1",
-                    [userId]
-                );
-
-                res.status(200).send(
-                    {
-                        sucesso: 1
-                    }
-                );
-            } else {
-                res.status(404).send(
-                    {
-                        sucesso: 0,
-                        cod_erro: 4,
-                        erro: "User not found"
-                    }
-                );
-            }
-        } catch (err) {
-            res.status(500).send(
+            res.status(200).send(
+                {
+                    sucesso: 1
+                }
+            );
+        } else {
+            res.status(404).send(
                 {
                     sucesso: 0,
-                    cod_erro: 2,
-                    erro: "erro BD: " + err.message
+                    cod_erro: 4,
+                    erro: "User not found"
                 }
             );
         }
-    } else {
-        res.status(400).send(
+    } catch (err) {
+        res.status(500).send(
             {
                 sucesso: 0,
-                cod_erro: 3,
-                erro: "faltam campos"
+                cod_erro: 2,
+                erro: "erro BD: " + err.message
             }
         );
     }
