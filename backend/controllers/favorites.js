@@ -1,13 +1,13 @@
 const db = require('../config/database');
 
 exports.addFavorite = async (req, res) => {
-    if (req.body.hasOwnProperty('login') && req.body.hasOwnProperty('carro_id')) {
-        const { login, carro_id } = req.body;
+    if (req.body.hasOwnProperty('carro_id')) {
+        const { carro_id } = req.body;
 
         try {
             const usuarioResult = await db.query(
                 "SELECT id FROM usuario WHERE login = $1",
-                [login]
+                [req.user.login]
             );
 
             if (usuarioResult.rows.length === 0) {
@@ -59,53 +59,43 @@ exports.addFavorite = async (req, res) => {
 };
 
 exports.listFavorites = async (req, res) => {
-    if ('login' in req.body) {
-        const { login } = req.body;
-        try {
-            const usuarioResult = await db.query(
-                "SELECT id FROM usuario WHERE login = $1",
-                [login]
-            );
+    try {
+        const usuarioResult = await db.query(
+            "SELECT id FROM usuario WHERE login = $1",
+            [req.user.login]
+        );
 
-            if (usuarioResult.rows.length === 0) {
-                return res.status(404).send({
-                    sucesso: 0,
-                    erro: "Usuário não encontrado"
-                });
-            }
-
-            const usuario_id = usuarioResult.rows[0].id;
-            const getAllFavoritesQuery = await db.query(
-                "SELECT * FROM favoritos WHERE usuario_id = $1",
-                [usuario_id]
-            );
-
-            if (getAllFavoritesQuery.rows.length !== 0) {
-                res.status(200).send({
-                    sucesso: 1,
-                    favoritos: getAllFavoritesQuery.rows,
-                    qtde_favoritos: getAllFavoritesQuery.rows.length
-                });
-            } else {
-                res.status(200).send({
-                    sucesso: 1,
-                    favoritos: [],
-                    qtde_favoritos: 0
-                });
-            }
-        } catch (err) {
-            const errorMsg = "Erro BD: " + err;
-            res.status(200).send({
+        if (usuarioResult.rows.length === 0) {
+            return res.status(404).send({
                 sucesso: 0,
-                cod_erro: 2,
-                erro: errorMsg
+                erro: "Usuário não encontrado"
             });
         }
-    } else {
-        const errorMsg = "Faltam parâmetros";
+
+        const usuario_id = usuarioResult.rows[0].id;
+        const getAllFavoritesQuery = await db.query(
+            "SELECT * FROM favoritos WHERE usuario_id = $1",
+            [usuario_id]
+        );
+
+        if (getAllFavoritesQuery.rows.length !== 0) {
+            res.status(200).send({
+                sucesso: 1,
+                favoritos: getAllFavoritesQuery.rows,
+                qtde_favoritos: getAllFavoritesQuery.rows.length
+            });
+        } else {
+            res.status(200).send({
+                sucesso: 1,
+                favoritos: [],
+                qtde_favoritos: 0
+            });
+        }
+    } catch (err) {
+        const errorMsg = "Erro BD: " + err;
         res.status(200).send({
             sucesso: 0,
-            cod_erro: 3,
+            cod_erro: 2,
             erro: errorMsg
         });
     }
@@ -116,41 +106,42 @@ exports.deleteFavorite = async (req, res) => {
         const { carro_id } = req.body;
 
         try {
-            const favoriteToDelete = await db.query(
-                "SELECT * FROM favoritos WHERE carro_id = $1",
-                [carro_id]
+            const usuarioResult = await db.query(
+                "SELECT id FROM usuario WHERE login = $1",
+                [req.user.login]
             );
 
-            if (favoriteToDelete.rows.length === 0) {
-                const erroMsg = "Favorito não encontrado";
-                return res.status(200).send({
+            if (usuarioResult.rows.length === 0) {
+                return res.status(404).send({
                     sucesso: 0,
-                    erro: erroMsg
+                    erro: "Usuário não encontrado"
                 });
             }
 
+            const usuario_id = usuarioResult.rows[0].id;
+
             await db.query(
-                "DELETE FROM favoritos WHERE carro_id = $1",
-                [carro_id]
+                "DELETE FROM favoritos WHERE usuario_id = $1 AND carro_id = $2",
+                [usuario_id, carro_id]
             );
 
             res.status(200).send({
                 sucesso: 1
             });
         } catch (err) {
-            const erroMsg = "Erro BD: " + err;
+            const errorMsg = "Erro BD: " + err;
             res.status(200).send({
                 sucesso: 0,
                 cod_erro: 2,
-                erro: erroMsg
+                erro: errorMsg
             });
         }
     } else {
-        const erroMsg = "Faltam parâmetros";
-        res.status(200).send({
+        const errorMsg = "Faltam parâmetros";
+        res.status(400).send({
             sucesso: 0,
             cod_erro: 3,
-            erro: erroMsg
+            erro: errorMsg
         });
     }
 };

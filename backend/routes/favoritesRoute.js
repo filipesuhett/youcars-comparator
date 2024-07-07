@@ -13,8 +13,15 @@ var challangeAuth = basicAuth(
     }
 );
 
-router.post('/add_favorite', challangeAuth, favorites.addFavorite);
-router.get('/list_favorite', challangeAuth, favorites.listFavorites);
-router.post('/remove_favorite', challangeAuth, favorites.deleteFavorite);
+const addUserToRequest = (req, res, next) => {
+    if (req.auth && req.auth.user) {
+        req.user = { login: req.auth.user };
+    }
+    next();
+};
+
+router.post('/add_favorite', challangeAuth, addUserToRequest, favorites.addFavorite);
+router.get('/list_favorite', challangeAuth, addUserToRequest, favorites.listFavorites);
+router.post('/remove_favorite', challangeAuth, addUserToRequest, favorites.deleteFavorite);
 
 module.exports = router;
