@@ -16,10 +16,17 @@ var challangeAuth = basicAuth(
     }
 );
 
+const addUserToRequest = (req, res, next) => {
+    if (req.auth && req.auth.user) {
+        req.user = { login: req.auth.user };
+    }
+    next();
+};
+
 // router.get('/brand', comment.searchBrand);
-router.post('/add_comment', challangeAuth, comment.addComment);
-router.post('/remove_comment', challangeAuth, comment.removeComment);
-router.get('/list_comment_user', challangeAuth, comment.listCommentUser);
+router.post('/add_comment', challangeAuth, addUserToRequest, comment.addComment);
+router.post('/remove_comment', challangeAuth, addUserToRequest, comment.removeComment);
+router.get('/list_comment_user', challangeAuth, addUserToRequest, comment.listCommentUser);
 router.get('/list_comment_car', challangeAuth, comment.listCommentCar); 
 
 
