@@ -153,3 +153,55 @@ exports.deleteFavorite = async (req, res) => {
         });
     }
 };
+
+exports.verifyFavorite = async (req, res) => {
+    if (req.query.hasOwnProperty('carro_id')) {
+        const { carro_id } = req.query;
+
+        try {
+            const usuarioResult = await db.query(
+                "SELECT id FROM usuario WHERE login = $1",
+                [req.user.login]
+            );
+
+            if (usuarioResult.rows.length === 0) {
+                return res.status(404).send({
+                    sucesso: 0,
+                    erro: "Usuário não encontrado"
+                });
+            }
+
+            const usuario_id = usuarioResult.rows[0].id;
+
+            const favoriteToAdd = await db.query(
+                "SELECT * FROM favoritos WHERE usuario_id = $1 AND carro_id = $2",
+                [usuario_id, carro_id]
+            );
+
+            if (favoriteToAdd.rows.length !== 0) {
+                res.status(200).send({
+                    sucesso: 1
+                });
+            } else {
+                res.status(200).send({
+                    sucesso: 0
+                });
+            }
+
+        } catch (err) {
+            const errorMsg = "Erro BD: " + err;
+            res.status(200).send({
+                sucesso: 0,
+                cod_erro: 2,
+                erro: errorMsg
+            });
+        }
+    } else {
+        const erroMsg = "Faltam parâmetros";
+        res.status(400).send({
+            sucesso: 0,
+            cod_erro: 3,
+            erro: erroMsg
+        });
+    }
+};
