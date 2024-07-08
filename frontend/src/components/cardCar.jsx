@@ -106,7 +106,11 @@ const Card = ({ carro, adicionarComparador }) => {
   }
 
   return (
+<<<<<<< Updated upstream
     <div style={styles.Card}>
+=======
+    <div style={styles.Card} >
+>>>>>>> Stashed changes
         <p style={styles.text}>{`${carro.modelo}  ${carro.versao } ${carro.ano}` ?? "Nome do carro"}</p> 
 
         <Image

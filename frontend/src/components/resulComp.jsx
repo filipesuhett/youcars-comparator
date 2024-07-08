@@ -75,7 +75,7 @@ const styles = {
 
 const defaultImage = "/img/carro.png"
 
-const ResulComp = ({ carro }) => {
+const ResulComp = (carro ) => {
   return (
     <div style={styles.Card}>
 

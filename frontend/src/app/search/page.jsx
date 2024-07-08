@@ -5,7 +5,7 @@ import Footer from "../../components/footer.jsx"
 import Header from "../../components/header.jsx"
 import ResulComp from "../../components/resulComp.jsx"
 import Opinion from "../../components/opinion.jsx"
-import ButtonTeste from "../../components/searchCar.jsx"
+import SearchCar from "../../components/searchCar.jsx"
 import { useState, useEffect } from 'react'
 import { guardarCarros } from '../../helpers/util.jsx'
 import "../globals.css"
@@ -206,7 +206,7 @@ export default function Search() {
         </div>
         <div style={containerCardOptions}>
           <div className="flex mt-28">
-            <ButtonTeste criarCarros={criarCarros} />
+            <SearchCar criarCarros={criarCarros} />
           </div>
           
           <div style={containerCard}>
@@ -214,7 +214,7 @@ export default function Search() {
               <h2 className="text-2xl">Detalhes dos Carros Pesquisados</h2>
               <p className="text-xl">{`${listaCarro.length} resultados`}</p>
             </div>
-            <div className="flex flex-wrap w-full gap-20 overflow-hidden overflow-y-auto">
+            <div className="flex flex-wrap w-full h-2/3 gap-20 overflow-hidden overflow-y-auto">
             {listaCarro.map((carro) => (<Card key={carro.id} adicionarComparador={adicionarComparador} carro={ carro } />))}
             </div>
             <div style={styles.containerButton}>

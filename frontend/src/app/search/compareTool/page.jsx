@@ -4,15 +4,9 @@ import Header from "../../../components/header.jsx"
 import ResulComp from "../../../components/resulComp.jsx"
 import Opinion from "../../../components/opinion.jsx"
 import { getcarros } from '../../../helpers/util.jsx'
-import "../../globals.css"
 import { useState, useEffect } from 'react'
 import React from "react"
 import "../../globals.css"
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: 'http://localhost:3000'
-})
 
 const styles = {
   ContainerResult: {
