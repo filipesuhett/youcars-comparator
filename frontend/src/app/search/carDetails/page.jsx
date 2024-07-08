@@ -8,10 +8,10 @@ import axios from 'axios';
 import CartextInfo from "../../../components/cartextInfo.jsx"
 import "../../globals.css"
 import { useState, useEffect } from 'react'
-import { getDetalheCarro } from '../../../helpers/util.jsx'
+import { getDetalheCarro, getUser, getPassword } from '../../../helpers/util.jsx'
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3001'
 })
 
 const styles = {
@@ -168,10 +168,32 @@ const IconComponent = () => (
 export default function CarDetais() {
 
   const [carro, setCarro] = useState([]);
-  
+
   useEffect(() => {
     setCarro(getDetalheCarro())
   }, []);
+
+  async function handleClickAddFavorite(){
+    const login = getUser()
+    const senha = getPassword()
+    await api({
+      method: 'post',
+      url:'/api/add_favorite',
+      auth:{
+        username:login,
+        password:senha
+      },
+      data: {
+        carro_id: carro.id
+      }
+      
+    })
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+    }).catch(erro => {
+        alert(erro)
+    })
+  }
 
   return (
     <div className="flex h-screen w-screen flex-col bg-white">
@@ -196,7 +218,7 @@ export default function CarDetais() {
 
               </div>
               <div style={styles.containerButton}>
-                <button style={styles.ButtonFavorite}><IconComponent /></button>
+                <button style={styles.ButtonFavorite} onClick={handleClickAddFavorite}><IconComponent /></button>
                 <button style={styles.Button}>Adicionar Comparador</button>
               </div>
            
