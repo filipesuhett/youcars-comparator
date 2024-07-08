@@ -1,12 +1,16 @@
+'use client'
 import Footer from "../../components/footer.jsx"
 import Header from "../../components/header.jsx"
 import ResulComp from "../../components/resulComp.jsx"
 import CardFavorite from "../../components/cardFavorite.jsx"
 import "../globals.css"
+import { useState, useEffect } from 'react'
+import {getUser, getPassword} from '../../helpers/util.jsx'
+import React from "react"
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3001/api/'
 })
 
 const styles = {
@@ -25,16 +29,39 @@ const styles = {
   }
 }
 export default function Search() {
+  const [carros, setCarros] = useState([]);
+  
+  useEffect(() => {
+    const login = getUser();
+    const senha = getPassword();
+    api({
+      method: 'get',
+      url:'/list_favorite',
+      auth:{
+        username:login,
+        password:senha
+      }
+      
+    })
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+      if(response.data.sucesso == 1){
+        setCarros(response.data.favoritos)
+      }
+      else{
+        alert("ERRO")
+      }
+    })
+  }, []);
+
 
   return (
     <div className="flex h-screen w-screen flex-col items-center bg-white">
           <Header />
           <h1 style={styles.Text}>Seus Carros Favoritos</h1>
-            <div style={styles.ContainerResult}>
-              <CardFavorite/>
-              <CardFavorite/>
-              <CardFavorite/>
-            </div>
+          <div style={styles.ContainerResult}>
+            {carros.map((carro) => (<CardFavorite key={carro.carro[0].id} carro={carro.carro[0]} />))}
+          </div>
           <Footer position="fixed bottom-0" />
     </div>
     
