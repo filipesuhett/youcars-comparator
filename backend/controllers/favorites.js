@@ -78,6 +78,14 @@ exports.listFavorites = async (req, res) => {
             [usuario_id]
         );
 
+        for (let i = 0; i < getAllFavoritesQuery.rows.length; i++) {
+            getCar = await db.query(
+                "SELECT * FROM carro WHERE id = $1",
+                [getAllFavoritesQuery.rows[i].carro_id]
+            );
+            getAllFavoritesQuery.rows[i].carro = getCar.rows;
+        }
+
         if (getAllFavoritesQuery.rows.length !== 0) {
             res.status(200).send({
                 sucesso: 1,
