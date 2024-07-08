@@ -1,15 +1,17 @@
 import React from 'react';
 import Image from 'next/image';
 import "../app/globals.css"
+
+
 const styles = {
-  
+
   Card: {
     display: 'Flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: "Column",
-    width: '273px',
-    height: '454px',
+    width: '100%',
+    height: '50px',
     backgroundColor: '#e5e7eb',
     borderRadius: '24px',
     border: '1px solid #030303',
@@ -40,19 +42,14 @@ const styles = {
 
 const defaultImage = "/img/carro.png"
 
-const Opinion = (props) => {
+const Opinion = (comentario) => {
+  console.log(comentario)
+
   return (
     <div style={styles.Card}>
-      <Image
-        priority={true}
-        style={styles.imge}
-        src={props.urlIMG ?? defaultImage }
-        width={100}
-        height={100}
-        alt="Picture of the author"/>
-        
       <div>
-        <p>{props.comentario}</p>
+        <p>{comentario.texto}</p>
+        <p>{comentario.created_at}</p>
       </div>
       
         

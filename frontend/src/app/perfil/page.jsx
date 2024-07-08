@@ -128,7 +128,7 @@ export default function Perfil() {
 
         <div style={styles.containerPerfil}>
           <div style={styles.coments}>
-              <p>Seus comentários</p>
+              <p>Se</p>
             
           </div>
         </div>

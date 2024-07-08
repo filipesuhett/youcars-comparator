@@ -9,7 +9,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'start',
     flexDirection: "Column",
-    width: '672px',
+    width: '100%',
     minHeight: '80px',
     backgroundColor: '#ffffff',
     borderRadius: '8px',
@@ -30,6 +30,8 @@ const styles = {
     lineHeight: '24px',
   },
   name:{
+    display: 'flex',
+    width: '100%',
     color: '#030303',
     fontSize: '16px',
     fontFamily: 'Source Sans 3',
@@ -52,24 +54,19 @@ const styles = {
 };
 
 
-const Opinion = (props) => {
-
-  const pegarComentarios = async (event) =>{
-    
-  }
-
+const Opinion = ({comentario}) => {
   return (
     <div style={styles.Card}>
         
       <div style={styles.userComment}>
 
-        <p style={styles.name}>{props.usuario ?? "Marli"}</p>
-        <p style={styles.text}>{props.comentario ?? "Caralho achei esse Carro Sensacional, em 2023 eu comprei 7 deles para doar para um ong e eles me agradeceram imensamente" } </p>
+        <p style={styles.name}>{comentario.login ?? "Marli"}</p>
+        <p style={styles.text}>{comentario.texto ?? "Caralho achei esse Carro Sensacional, em 2023 eu comprei 7 deles para doar para um ong e eles me agradeceram imensamente" } </p>
         
       </div>
       
       <div style={styles.cantinho}>
-        <p style={styles.date}>{props.date ?? "20/04/2023 20:20"}</p>
+        <p style={styles.date}>{comentario.created_at ?? "20/04/2023 20:20"}</p>
       </div>  
     </div>
   );

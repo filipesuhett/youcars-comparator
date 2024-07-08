@@ -1,7 +1,7 @@
 'use client'
 import Card from "../../../components/cardCar.jsx"
 import CardCompare from "../../../components/cardCompare.jsx"
-import Opinion from "../../../components/coments.jsx"
+import Opinion from "../../../components/opinion.jsx"
 import Footer from "../../../components/footer.jsx"
 import Header from "../../../components/header.jsx"
 import Image from 'next/image';
@@ -167,16 +167,39 @@ const IconComponent = () => (
 
 
 export default function CarDetais() {
-
   const [carro, setCarro] = useState([]);
+  const [comentario, setComentario] = useState([]);
+  const [addComentario, setAddComentario] = useState('')
+  const [login, setLogin] = useState('')
+  const [senha, setSenha] = useState('')
 
   useEffect(() => {
     setCarro(getDetalheCarro())
+    setLogin(getUser())
+    setSenha(getPassword())
+
+    api({
+      method: 'get',
+      url:'/api/list_comment_car',
+      auth:{
+        username:getUser(),
+        password:getPassword()
+      },
+      params: {
+        carro_id: getDetalheCarro().id
+      }
+      
+      
+    })
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+      setComentario(response.data.comentarios)
+    }).catch(erro => {
+        alert(erro)
+    })
   }, []);
 
   async function handleClickAddFavorite(){
-    const login = getUser()
-    const senha = getPassword()
     await api({
       method: 'post',
       url:'/api/add_favorite',
@@ -187,6 +210,32 @@ export default function CarDetais() {
       data: {
         carro_id: carro.id
       }
+      
+    })
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+    }).catch(erro => {
+        alert(erro)
+    })
+
+    
+  }
+
+  async function handleClickAddComentario(){
+    if(addComentario == '') return alert('Não pode enviar comentário vazio')
+    await api({
+      method: 'post',
+      url:'/api/add_comment',
+      auth:{
+        username:login,
+        password:senha
+      },
+      data: {
+        id_carro: carro.id,
+        comentario: addComentario
+
+      }
+      
       
     })
     .then(response => {
@@ -223,11 +272,10 @@ export default function CarDetais() {
                 <button style={styles.Button}>Adicionar Comparador</button>
               </div>
             </div>
-            <Opinion />
             <div>
               <p>Comentários dos Usuários</p>
               <div style={styles.coments}>
-                
+                {comentario.map((comentario) => (<Opinion key={comentario.id} comentario={comentario}/>))}
               </div>
             </div>
 
@@ -237,8 +285,8 @@ export default function CarDetais() {
 
         <div style={styles.addComents}>
           <p style={styles.TextComentTitle}>Comente aqui</p>
-          <input style={styles.Input} placeholder="Deixe seu comentário sobre o carro aqui" />
-          <button style={styles.ButtonEnviar}>Enviar</button>
+          <input style={styles.Input} placeholder="Deixe seu comentário sobre o carro aqui" onChange={(e) => setAddComentario(e.target.value)} />
+          <button  style={styles.ButtonEnviar} onClick={handleClickAddComentario}>Enviar</button>
         </div>
 
       <Footer position={'fixed'}/>
