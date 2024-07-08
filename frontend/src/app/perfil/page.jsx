@@ -2,9 +2,11 @@
 import axios from 'axios';
 import React from "react"
 import "../globals.css"
-import PerfilUsuario from '../../components/perfilUsuario';
-
-import { getUser } from '../../helpers/util.jsx'
+import Settings from '../../components/settings.jsx';
+import PerfilUsuario from '../../components/perfilUsuario.jsx';
+import { getDetalheCarro, getUser, getPassword } from '../../helpers/util.jsx'
+import Opinion from "../../components/opinion.jsx"
+import { useState, useEffect } from 'react'
 
 const api = axios.create({
   baseURL: 'http://localhost:3001'
@@ -119,7 +121,13 @@ const IconBack = () => (
 
 
 export default function Perfil() {
-  if(getUser() != null){
+  const [login, setLogin] = useState('')
+
+  useEffect(() => {
+    setLogin(getUser())
+  }, []);
+  
+  if(login != null){
     return (
       <div style={styles.screen} className="flex h-screen w-screen bg-white">
 
@@ -132,7 +140,7 @@ export default function Perfil() {
             <a style={styles.Button} href="/settings"><IconSettings/> Settings</a>
         </div>
 
-        <PerfilUsuario />
+        < Settings />
   
       </div>
       

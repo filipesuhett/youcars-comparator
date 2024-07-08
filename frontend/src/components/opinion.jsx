@@ -54,13 +54,13 @@ const styles = {
 };
 
 
-const Opinion = ({comentario}) => {
+const Opinion = ({comentario, login}) => {
   return (
     <div style={styles.Card}>
         
       <div style={styles.userComment}>
 
-        <p style={styles.name}>{comentario.login ?? "Marli"}</p>
+        <p style={styles.name}>{login ?? comentario.login}</p>
         <p style={styles.text}>{comentario.texto ?? "Caralho achei esse Carro Sensacional, em 2023 eu comprei 7 deles para doar para um ong e eles me agradeceram imensamente" } </p>
         
       </div>
