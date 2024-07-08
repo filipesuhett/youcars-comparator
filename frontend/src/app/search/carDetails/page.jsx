@@ -1,6 +1,7 @@
 'use client'
 import Card from "../../../components/cardCar.jsx"
 import CardCompare from "../../../components/cardCompare.jsx"
+import Opinion from "../../../components/coments.jsx"
 import Footer from "../../../components/footer.jsx"
 import Header from "../../../components/header.jsx"
 import Image from 'next/image';
@@ -221,14 +222,12 @@ export default function CarDetais() {
                 <button style={styles.ButtonFavorite} onClick={handleClickAddFavorite}><IconComponent /></button>
                 <button style={styles.Button}>Adicionar Comparador</button>
               </div>
-           
             </div>
-
-
+            <Opinion />
             <div>
               <p>Comentários dos Usuários</p>
               <div style={styles.coments}>
-
+                
               </div>
             </div>
 
