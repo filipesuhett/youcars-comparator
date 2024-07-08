@@ -87,7 +87,7 @@ const api = axios.create({
   };
 
 
-const Buttonteste = (props) => {
+const SearchCar = (props) => {
     const [marcas, setMarcas ] = useState([])
     const [marca, setMarca ] = useState('')
 
@@ -101,14 +101,12 @@ const Buttonteste = (props) => {
     const [ dropdownMarca, setdropdownMarca ] = useState([])
     const [ dropdownModelo, setdropdownModelo ] = useState([])
     const [ dropdownAno, setdropdownAno ] = useState([])
-
-
-    let login = ''
-    let senha = ''
+    const [ login, setLogin ] = useState('')
+    const [ senha, setSenha] = useState('')
 
     useEffect(() => {
-      login = getUser()
-      senha = getPassword()
+      setLogin(getUser())
+      setSenha(getPassword())
 
       setborderOptions(styles.Card1)
       setdropdownMarca(styles.Dropdown1)
@@ -122,7 +120,7 @@ const Buttonteste = (props) => {
     async function handleClickGetMarcas(){
         
       await api({
-        method: 'post',
+        method: 'get',
         url:'/api/brand',
         auth:{
           username:login,
@@ -142,13 +140,13 @@ const Buttonteste = (props) => {
 
     async function handleClickGetModelo(){
       await api({
-        method: 'post',
+        method: 'get',
         url:'/api/model',
         auth:{
           username:login,
           password:senha
         },
-        data: {
+        params: {
           marca: marca
         }
         
@@ -165,13 +163,13 @@ const Buttonteste = (props) => {
     async function handleClickGetAno(){
         
       await api({
-        method: 'post',
+        method: 'get',
         url:'/api/year',
         auth:{
           username:login,
           password:senha
         },
-        data: {
+        params: {
           marca: marca,
           modelo: modelo
         }
@@ -190,13 +188,13 @@ const Buttonteste = (props) => {
       setborderOptions(styles.Card2)
         
       await api({
-        method: 'post',
+        method: 'get',
         url:'/api/filtercar',
         auth:{
           username:login,
           password:senha
         },
-        data: {
+        params: {
           marca: marca,
           modelo: modelo,
           ano: ano
@@ -236,4 +234,4 @@ const Buttonteste = (props) => {
   );
 };
 
-export default Buttonteste;
+export default SearchCar;
