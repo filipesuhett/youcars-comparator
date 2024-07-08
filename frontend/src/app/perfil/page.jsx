@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React from "react"
 import "../globals.css"
+import PerfilUsuario from '../../components/perfilUsuario';
 
 import { getUser } from '../../helpers/util.jsx'
 
@@ -18,10 +19,10 @@ const styles = {
   },
   Text: {
     color: '#030303',
-    fontSize: '15px',
+    fontSize: '20px',
     fontFamily: 'Source Sans Pro',
     fontWeight: 700,
-    lineHeight: '24px',
+    lineHeight: '20px',
   },
   opicoes: {
     display: 'flex',
@@ -29,17 +30,10 @@ const styles = {
     width: '300px',
     height: '100vh',
     backgroundColor: '#a9a9a9',
-  },
-  coments: {
-    width: '1053px',
-    height: '639px',
-    backgroundColor: '#a9a9a9',
-    borderRadius: '24px',
+    padding: '42px 0 0 35px'
   },
   Button: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     cursor: 'pointer',
     width: '320px',
     height: '44px',
@@ -47,27 +41,24 @@ const styles = {
     boxSizing: 'border-box',
     borderRadius: '24px',
     color: '#000000',
-    fontSize: '14px',
+    fontSize: '18px',
+    fontWeight: '500',
     fontFamily: 'Source Sans 3',
     lineHeight: '20px',
     outline: 'none',
+    margin: '0 0 0 35px'
   },
   Icon: {
     color: '#030303',
     fill: '#030303',
-    fontSize: '20px',
+    fontSize: '26px',
+    margin: '0 6px 0 0',    
     top: '176px',
     left: '40px',
-    width: '20px',
-    height: '20px',
+    width: '25px',
+    height: '25px',
   },
-  containerPerfil: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-    width: '100%'
-  },
+  
   ButtonSearch: {
     position: 'absolute',
     cursor: 'pointer',
@@ -88,7 +79,13 @@ const styles = {
     outline: 'none',
   },
   voltar: {
-    margin: '42px 0 106px 78px'
+    display: 'flex',
+    margin: '0 0 120px 0',
+    color: '#030303',
+    fontSize: '20px',
+    fontFamily: 'Source Sans 3',
+    fontWeight: 600,
+    lineHeight: '26px'
   }
 
 };
@@ -111,6 +108,15 @@ const IconPerson = () => (
   </svg>
 );
 
+const IconBack = () => (
+  <svg style={styles.Icon}  viewBox="0 0 24 24">
+    <path fill="none" d="M0 0h24v24H0z">
+    </path>
+    <path d="M17.77 3.77 16 2 6 12l10 10 1.77-1.77L9.54 12z">
+    </path>
+  </svg>
+);
+
 
 export default function Perfil() {
   if(getUser() != null){
@@ -121,20 +127,13 @@ export default function Perfil() {
 
 
         <div style={styles.opicoes}>
-            <a style={styles.voltar} href="/search">Voltar a pesquisa</a>
+            <a style={styles.voltar} href="/search"><IconBack/> Voltar a pesquisa</a>
             <a style={styles.Button} href="/settings"><IconPerson/> Perfil</a>
             <a style={styles.Button} href="/settings"><IconSettings/> Settings</a>
         </div>
 
-        <div style={styles.containerPerfil}>
-          <div style={styles.coments}>
-              <p>Se</p>
-            
-          </div>
-        </div>
-        
-
-          
+        <PerfilUsuario />
+  
       </div>
       
     );
