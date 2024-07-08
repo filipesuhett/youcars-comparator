@@ -146,6 +146,13 @@ exports.listCommentCar = async (req, res) => {
             );
 
             if (getAllFavoritesQuery.rows.length !== 0) {
+                for (let i = 0; i < getAllFavoritesQuery.rows.length; i++) {
+                    const usuarioResult = await db.query(
+                        "SELECT login FROM usuario WHERE id = $1",
+                        [getAllFavoritesQuery.rows[i].usuario_id]
+                    );
+                    getAllFavoritesQuery.rows[i].login = usuarioResult.rows[0].login;
+                }
                 res.status(200).send({
                     sucesso: 1,
                     comentarios: getAllFavoritesQuery.rows,
