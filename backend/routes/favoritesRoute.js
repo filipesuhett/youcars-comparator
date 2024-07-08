@@ -23,5 +23,6 @@ const addUserToRequest = (req, res, next) => {
 router.post('/add_favorite', challangeAuth, addUserToRequest, favorites.addFavorite);
 router.get('/list_favorite', challangeAuth, addUserToRequest, favorites.listFavorites);
 router.post('/remove_favorite', challangeAuth, addUserToRequest, favorites.deleteFavorite);
+router.get('/verify_favorite', challangeAuth, addUserToRequest, favorites.verifyFavorite);
 
 module.exports = router;
