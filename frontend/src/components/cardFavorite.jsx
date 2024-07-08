@@ -1,7 +1,17 @@
+'use client'
 import React from 'react';
 import Image from 'next/image';
 const imagemCarro = "https://cdn.discordapp.com/attachments/1026594236017160312/1253116567630250034/image.png?ex=6674af3f&is=66735dbf&hm=7f411f909408547bdeae8c15690aaae29adc76b05a5c5245ba28b652d8b990de&"
 import "../app/globals.css"
+import { useState, useEffect } from 'react'
+import {getUser, getPassword} from '../helpers/util.jsx'
+
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'http://localhost:3001/api/'
+})
+
 const styles = {
   
   Card: {
@@ -98,7 +108,38 @@ const styles = {
 
 const defaultImage = "/img/carro.png"
 
-const CardFavorite = (props) => {
+const CardFavorite = (carro ) => {
+  const [login, setLogin] = useState('')
+  const [senha, setSenha] = useState('')
+  useEffect(() => {
+    setLogin(getUser())
+    setSenha(getPassword())
+  }, []);
+
+
+  function handleClickRemoveFavorite(){
+    api({
+      method: 'post',
+      url:'/remove_favorite',
+      auth:{
+        username:login,
+        password:senha
+      },
+      data:{
+        carro_id: carro.carro.id
+      }
+      
+    })
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+      if(response.data.sucesso == 1){
+        window.location.href = "/favorite";
+      }
+      else{
+        alert("ERRO")
+      }
+    })
+  }
   return (
     <div style={styles.Card}>
 
@@ -106,7 +147,7 @@ const CardFavorite = (props) => {
             <Image
             priority={true}
             style={styles.imge}
-            src={props.urlIMG ?? defaultImage }
+            src={carro.carro.img ?? defaultImage }
             width={241}
             height={236}
             alt="Picture of the author"/>
@@ -116,12 +157,12 @@ const CardFavorite = (props) => {
         </div>
         
         <div style={styles.infoEadicionar}>
-            <p style={styles.text}>{props.nome ?? "Uno Prateado"}</p> 
-            <p style={styles.textinfo}>{props.modelo ?? "Eletrico"}</p>
-            <p style={styles.textinfo}>{props.ano ?? 2024}</p>
+            <p style={styles.text}>{carro.carro.marca ?? "Uno Prateado"}</p> 
+            <p style={styles.textinfo}>{carro.carro.modelo ?? "Eletrico"}</p>
+            <p style={styles.textinfo}>{carro.carro.ano ?? 2024}</p>
         </div>
 
-        <button style={styles.buttonAdicionar}>Remover</button>
+        <button style={styles.buttonAdicionar} onClick={handleClickRemoveFavorite}>Remover</button>
         
     </div>
   );
