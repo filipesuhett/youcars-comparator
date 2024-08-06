@@ -140,7 +140,7 @@ export default function Perfil() {
             <a style={styles.Button} href="/settings"><IconSettings/> Settings</a>
         </div>
 
-        < Settings />
+        < PerfilUsuario />
   
       </div>
       

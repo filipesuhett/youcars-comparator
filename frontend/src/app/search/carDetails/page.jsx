@@ -169,9 +169,9 @@ const IconComponent = () => (
 export default function CarDetais() {
   const [carro, setCarro] = useState([]);
   const [comentario, setComentario] = useState([]);
-  const [addComentario, setAddComentario] = useState('')
-  const [login, setLogin] = useState('')
-  const [senha, setSenha] = useState('')
+  const [addComentario, setAddComentario] = useState('');
+  const [login, setLogin] = useState('');
+  const [senha, setSenha] = useState('');
 
   useEffect(() => {
     setCarro(getDetalheCarro())
@@ -182,14 +182,12 @@ export default function CarDetais() {
       method: 'get',
       url:'/api/list_comment_car',
       auth:{
-        username:getUser(),
-        password:getPassword()
+        username: getUser(),
+        password: getPassword()
       },
       params: {
         carro_id: getDetalheCarro().id
       }
-      
-      
     })
     .then(response => {
       console.log('Resposta do servidor:', response.data);
