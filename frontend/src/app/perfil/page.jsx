@@ -68,7 +68,6 @@ const styles = {
     right: '138px',
     width: '106px',
     height: '48px',
-    padding: '0px 8px',
     border: '0',
     boxSizing: 'border-box',
     borderRadius: '24px',
@@ -78,7 +77,9 @@ const styles = {
     fontFamily: 'Source Sans 3',
     fontWeight: 700,
     lineHeight: '20px',
-    outline: 'none',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   voltar: {
     display: 'flex',
@@ -122,25 +123,41 @@ const IconBack = () => (
 
 export default function Perfil() {
   const [login, setLogin] = useState('')
+  const [settingsDisplay, setSettingDisplay] = useState(true)
+  const [perfilDisplay, setperfilDisplay] = useState(false)
+  
 
   useEffect(() => {
     setLogin(getUser())
   }, []);
+
+  function handleClickComentarios(){
+    setSettingDisplay(false)
+    setperfilDisplay(true)
+  }
+
+  function handleClickConfiguracao(){
+    setperfilDisplay(false)
+    setSettingDisplay(true)
+    
+  }
   
   if(login != null){
     return (
       <div style={styles.screen} className="flex h-screen w-screen bg-white">
 
-        <button style={styles.ButtonSearch}>Buscar Carro</button>
+        <a style={styles.ButtonSearch} href="/search">Buscar Carros</a>
 
 
         <div style={styles.opicoes}>
             <a style={styles.voltar} href="/search"><IconBack/> Voltar a pesquisa</a>
-            <a style={styles.Button} href="/settings"><IconPerson/> Perfil</a>
-            <a style={styles.Button} href="/settings"><IconSettings/> Settings</a>
+            <a style={styles.Button}  onClick={handleClickComentarios}><IconPerson/> Comentários</a>
+            <a style={styles.Button} onClick={handleClickConfiguracao}><IconSettings/> Configurações</a>
         </div>
 
-        < PerfilUsuario />
+        < Settings display={settingsDisplay} />
+
+        <PerfilUsuario display={perfilDisplay}/>
   
       </div>
       

@@ -1,0 +1,54 @@
+.buttonCustom {
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 18px;
+    font-family: Source Sans 3;
+    font-weight: 400;
+    line-height: 24px;
+    border: none;
+    padding: 5px, 0px, 5px, 0px;
+    outline: none;
+  }
+  
+  .dropdown {
+    background-color: transparent;
+    color: rgb(56, 56, 56);
+    font-size: 18px;
+    font-family: Source Sans 3;
+    font-weight: 400;
+    line-height: 24px;
+    padding: 2px;
+    outline: none;
+  }
+
+  .dropdown:hover{
+    background-color: aliceblue;
+  }
+
+  .dropdownMenu{
+    width: 200px;
+    border: none;
+    background-color: #ffffff;
+    outline: none;
+    
+  }
+
+  .mainContainer{
+    outline: none;
+  }
+
+  .logout{
+    font-size: 18px;
+    font-family: Source Sans 3;
+    font-weight: 400;
+    line-height: 24px;
+    padding: 2px;
+    color: rgb(163, 0, 0);
+    outline: none;
+  }
+
+  .logout:hover{
+    cursor: pointer;
+    color: rgb(228, 1, 1);
+    background-color: aliceblue;
+  }

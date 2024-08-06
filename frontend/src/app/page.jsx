@@ -12,6 +12,7 @@ import Image from 'next/image';
 import './globals.css';
 import axios from 'axios';
 import React from "react"
+import { useEffect, useState } from "react"
 
 import {getUser} from '../helpers/util.jsx'
 
@@ -115,12 +116,12 @@ const styles = {
       boxSizing: 'border-box',
       borderRadius: '24px',
       backgroundColor: '#030303',
-      color: '#ffffff',
       fontSize: '16px',
       fontFamily: 'Source Sans 3',
       fontWeight: 700,
       lineHeight: '22px',
       outline: 'none',
+      color: '#ffff',
     },
     CarHome: {
       height: '100vh',
@@ -170,13 +171,18 @@ const styles = {
   };
 
 export default function Home() {
-  if(getUser() != null){
+  const [login, setLogin] = useState('null')
+  useEffect(() => {
+    setLogin(getUser())
+  }, []);
+  
+  if(login != 'null'){
     return (
       <div className="flex w-screen flex-col items-center justify-between bg-white">
           <nav style={styles.Header}>
             <p style={styles.Text}>You Cars</p>
-            <a style={styles.TextPerfil} href="/perfil">Perfil</a>
-            <a style={styles.Button} href="/favoritePage">Favoritos</a>
+            <a style={styles.Text} href="/perfil">Perfil</a>
+            <a style={styles.Text} href="/favorite">Favoritos</a>
           </nav>
 
           <section style={styles.mainHome}>

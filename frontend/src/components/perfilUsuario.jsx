@@ -132,7 +132,7 @@ const styles = {
 };
 
 
-const PerfilUsuario = (props) => {
+const PerfilUsuario = ({display}) => {
     const [login, setLogin] = useState('')
     const [comentario, setComentario] = useState([]);
 
@@ -158,22 +158,26 @@ const PerfilUsuario = (props) => {
       }, []);
 
 
-  return (
-    <div style={styles.containerPerfil}>
-        <div style={styles.containertitle}>
-            <h1 style={styles.title}>Seus Comentários</h1>
-        </div>
-        
-          <div style={styles.coments}>
-            <div style={styles.containerInfos}>
-            {comentario.map((comentario) => (<Opinion key={comentario.id} comentario={comentario} login={login}/>))}
-                
-            </div>
-
+  if(display == true) {
+    return (
+      <div style={styles.containerPerfil}>
+          <div style={styles.containertitle}>
+              <h1 style={styles.title}>Seus Comentários</h1>
           </div>
-    </div>
-  );
-};
+          
+            <div style={styles.coments}>
+              <div style={styles.containerInfos}>
+              {comentario.map((comentario) => (<Opinion key={comentario.id} comentario={comentario} login={login}/>))}
+                  
+              </div>
+  
+            </div>
+      </div>
+    );
+  };
+
+  }
+  
 
 export default PerfilUsuario;
 

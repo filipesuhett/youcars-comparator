@@ -15,6 +15,7 @@ const api = axios.create({
   baseURL: 'http://localhost:3001'
 })
 
+let verificado = true
 const styles = {
   imge: {
     width: '672px',
@@ -137,10 +138,14 @@ const styles = {
     margin: '10px 0 10px 0'
   },
   coments: {
+    display: 'flex',
+    flexDirection: 'column',
     width: '800px',
-    height: '250px',
+    minHeight: '250px',
     backgroundColor: '#f8f8f8',
     borderRadius: '8px',
+    margin: '0 0 100px 0',
+    gap: '20px'
   },
   Icon: {
     color: '#ffcc00',
@@ -151,19 +156,14 @@ const styles = {
     width: '29px',
     height: '29px',
   },
+  containerComents: {
+    margin: '20px 0 0 30px',
+    minHeight: '250px',
+  }
 
 }
 
 const defaultImage = "/img/carro2.png"
-
-const IconComponent = () => (
-  <svg style={styles.Icon}  viewBox="0 0 24 24">
-    <path d="M0 0h24v24H0z" fill="none">
-    </path>
-    <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z">
-    </path>
-  </svg>
-);
 
 
 export default function CarDetais() {
@@ -172,11 +172,53 @@ export default function CarDetais() {
   const [addComentario, setAddComentario] = useState('');
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
+  const [favorite, setFavorite] = useState(false);
+
+  const fav = {
+    Icon: {
+      color: '#ffcc00',
+      fill: favorite ? '#ffcc00' : "white",
+      fontSize: '29px',
+      top: '161px',
+      left: '1267px',
+      width: '29px',
+      height: '29px',
+    }
+  }
+
+  const IconComponent = () => (
+  <svg style={fav.Icon}  viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0z" fill="none">
+    </path>
+    <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z">
+    </path>
+  </svg>
+);
 
   useEffect(() => {
     setCarro(getDetalheCarro())
     setLogin(getUser())
     setSenha(getPassword())
+
+    api({
+      method: 'get',
+      url:'/api/verify_favorite',
+      auth:{
+        username:getUser(),
+        password:getPassword()
+      },
+      params: {
+        carro_id: getDetalheCarro().id
+      }
+      
+    })
+    .then(response => {
+      if(response.data.sucesso == 1){
+        setFavorite(true)
+      } 
+    }).catch(erro => {
+        alert(erro)
+    })
 
     api({
       method: 'get',
@@ -196,25 +238,63 @@ export default function CarDetais() {
         alert(erro)
     })
   }, []);
-
+  
   async function handleClickAddFavorite(){
-    await api({
-      method: 'post',
-      url:'/api/add_favorite',
+    api({
+      method: 'get',
+      url:'/api/verify_favorite',
       auth:{
         username:login,
         password:senha
       },
-      data: {
+      params: {
         carro_id: carro.id
       }
       
     })
     .then(response => {
-      console.log('Resposta do servidor:', response.data);
+      if(response.data.sucesso == 1){
+        api({
+          method: 'post',
+          url:'/api/remove_favorite',
+          auth:{
+            username:login,
+            password:senha
+          },
+          data: {
+            carro_id: carro.id
+          }
+          
+        })
+        .then(response => {
+          setFavorite(false)
+          
+        }).catch(erro => {
+            alert(erro)
+        })
+      }else{
+        api({
+          method: 'post',
+          url:'/api/add_favorite',
+          auth:{
+            username:login,
+            password:senha
+          },
+          data: {
+            carro_id: carro.id
+          }
+          
+        })
+        .then(response => {
+          setFavorite(true)
+        }).catch(erro => {
+            alert(erro)
+        })
+      }
     }).catch(erro => {
         alert(erro)
     })
+    
 
     
   }
@@ -244,7 +324,7 @@ export default function CarDetais() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col bg-white">
+    <div className="flex w-screen flex-col bg-white">
       <Header/>
 
       <div style={styles.containerInfo}>
@@ -270,12 +350,7 @@ export default function CarDetais() {
                 <button style={styles.Button}>Adicionar Comparador</button>
               </div>
             </div>
-            <div>
-              <p>Comentários dos Usuários</p>
-              <div style={styles.coments}>
-                {comentario.map((comentario) => (<Opinion key={comentario.id} comentario={comentario}/>))}
-              </div>
-            </div>
+
 
           </div>
       
@@ -285,6 +360,13 @@ export default function CarDetais() {
           <p style={styles.TextComentTitle}>Comente aqui</p>
           <input style={styles.Input} placeholder="Deixe seu comentário sobre o carro aqui" onChange={(e) => setAddComentario(e.target.value)} />
           <button  style={styles.ButtonEnviar} onClick={handleClickAddComentario}>Enviar</button>
+        </div>
+
+        <div style={styles.containerComents}>
+              <p style={styles.TextComentTitle}>Comentários dos Usuários</p>
+              <div style={styles.coments}>
+                {comentario.map((comentario) => (<Opinion key={comentario.id} comentario={comentario}/>))}
+              </div>
         </div>
 
       <Footer position={'fixed'}/>

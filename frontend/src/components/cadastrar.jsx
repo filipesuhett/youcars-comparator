@@ -105,7 +105,10 @@ const Cadastrar = (props) => {
     .then(response => {
       console.log('Resposta do servidor:', response.data);
       if(response.data.sucesso == 0){alert("Error: " + response.data.erro)}
-      // Lógica adicional após o registro, como redirecionar para outra página
+      else{
+        guardarLogin(novo_login, nova_senha);
+        window.location.href = '/';
+      }
     })
   };
 

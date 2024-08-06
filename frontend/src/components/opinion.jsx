@@ -15,7 +15,7 @@ const styles = {
     borderRadius: '8px',
     border: '1.5px solid #e5e7eb',
     boxSizing: 'border-box',
-    padding: '14px'
+    padding: '14px',
   },
   date:{
     color: '#919191',

@@ -111,52 +111,50 @@ const styles = {
 };
 
 
-const Settings = (props) => {
+const Settings = ({display}) => {
 
-  return (
-    <div style={styles.containerPerfil}>
-          <div style={styles.coments}>
-            <div style={styles.containerInfos}>
-                <div style={styles.excluirPerfil}>
-                    <p style={styles.TEXTconfig}>Configuração de Perfil</p>
-                    <button style={styles.ButtonExcluir}>Excluir Conta</button>
-                </div>
-
-                <div style={styles.containerNomeExibição}>
-                    <p>Nome de Exibição</p>
-                    <input type="text" style={styles.Input} />
-                </div>
-
-                <div style={styles.HorizontalDivider}></div>
-
-                <h2 style={styles.TitleConfig}>Configuração da Conta</h2>
-
-                <div style={styles.containerNomeExibição}>
-                    <p>Senha</p>
-                    <input type="text" style={styles.Input} />
-                </div>
-
-
-                <div style={styles.containerSenhas}>
-                    <div style={styles.containerNomeExibição}>
-                        <p>Nova Senha</p>
-                        <input type="text" style={styles.Input} />
-                    </div>
-
-                    <div style={styles.containerNomeExibição}>
-                        <p>Repitir Senha</p>
-                        <input type="text" style={styles.Input} />
-                    </div>
-                    
-                </div>
-                <button style={styles.Salvar}>Salvar Mudanças</button>
-                
+  if(display == true){
+    return (
+      <div style={styles.containerPerfil}>
+            <div style={styles.coments}>
+              <div style={styles.containerInfos}>
+                  <div style={styles.excluirPerfil}>
+                      <p style={styles.TEXTconfig}>Configuração de Perfil</p>
+                      <button style={styles.ButtonExcluir}>Excluir Conta</button>
+                  </div>
+  
+                  <div style={styles.HorizontalDivider}></div>
+  
+                  <h2 style={styles.TitleConfig}>Configuração da Conta</h2>
+  
+                  <div style={styles.containerNomeExibição}>
+                      <p>Senha</p>
+                      <input type="text" style={styles.Input} />
+                  </div>
+  
+  
+                  <div style={styles.containerSenhas}>
+                      <div style={styles.containerNomeExibição}>
+                          <p>Nova Senha</p>
+                          <input type="text" style={styles.Input} />
+                      </div>
+  
+                      <div style={styles.containerNomeExibição}>
+                          <p>Repitir Senha</p>
+                          <input type="text" style={styles.Input} />
+                      </div>
+                      
+                  </div>
+                  <button style={styles.Salvar}>Salvar Mudanças</button>
+                  
+              </div>
+  
             </div>
-
-          </div>
-    </div>
-  );
-};
+      </div>
+    );
+  };
+  }
+  
 
 export default Settings;
 
