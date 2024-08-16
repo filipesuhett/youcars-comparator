@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react'
 import { guardarCarros } from '../../helpers/util.jsx'
 import "../globals.css"
 import axios from 'axios';
+import { useSearchParams } from "next/navigation.js"
 
 const api = axios.create({
   baseURL: 'http://localhost:3000'
@@ -25,6 +26,11 @@ export default function Search() {
   const [popupVisivel, setPopupVisivel] = useState(false);
 
   const [ carrosComparador, setcarrosComparador ] = useState([])
+
+  const searchParams = useSearchParams()
+  const marca = searchParams.get('marca')
+  const modelo = searchParams.get('modelo')
+  const ano = searchParams.get('ano')
 
 
   const styles = {

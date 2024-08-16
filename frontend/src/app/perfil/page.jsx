@@ -232,7 +232,8 @@ export default function Perfil() {
         window.location.href = '/';
       }
     }).catch(erro => {
-        alert("Erro ao excluir perfil")
+
+        alert(erro)
     })
   };
   

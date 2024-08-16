@@ -103,6 +103,7 @@ const SearchCar = (props) => {
     const [ dropdownAno, setdropdownAno ] = useState([])
     const [ login, setLogin ] = useState('')
     const [ senha, setSenha] = useState('')
+  
 
     useEffect(() => {
       setLogin(getUser())
@@ -112,6 +113,28 @@ const SearchCar = (props) => {
       setdropdownMarca(styles.Dropdown1)
       setdropdownModelo(styles.Dropdown2)
       setdropdownAno(styles.Dropdown2)
+      
+      //   console.log(props.modelo)
+      //   if(props.modelo==null){
+      //     setMarca(props.marca)
+      //     handleClickPesquisarCarro()
+      //     //só tem marca na url
+      //   }
+      //   else{
+      //     if(props.ano == null){
+      //       setMarca(props.marca)
+      //       setModelo(props.modelo)
+      //       handleClickPesquisarCarro()
+      //       //só marca e modelo na url
+      //     }
+      //     else{
+      //       setMarca(props.marca)
+      //       setModelo(props.modelo)
+      //       setAno(props.ano)
+      //       handleClickPesquisarCarro()
+      //       //todos os três na url
+      //     }
+      // }
     }, []);
 
     

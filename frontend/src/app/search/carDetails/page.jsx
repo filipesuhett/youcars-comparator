@@ -10,6 +10,7 @@ import CartextInfo from "../../../components/cartextInfo.jsx"
 import "../../globals.css"
 import { useState, useEffect } from 'react'
 import { getDetalheCarro, getUser, getPassword } from '../../../helpers/util.jsx'
+import { useSearchParams } from "next/navigation.js"
 
 const api = axios.create({
   baseURL: 'http://localhost:3001'
@@ -130,7 +131,7 @@ const styles = {
     boxSizing: 'border-box',
     borderRadius: '24px',
     backgroundColor: '#f5f5f5',
-    color: '#94a3b8',
+    color: 'black',
     fontSize: '20px',
     fontFamily: 'Source Sans 3',
     lineHeight: '150px',
@@ -168,11 +169,12 @@ const defaultImage = "/img/carro2.png"
 
 export default function CarDetais() {
   const [carro, setCarro] = useState([]);
-  const [comentario, setComentario] = useState([]);
+  const [comentarios, setComentarios] = useState([]);
   const [addComentario, setAddComentario] = useState('');
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
   const [favorite, setFavorite] = useState(false);
+  const searchParams = useSearchParams()
 
   const fav = {
     Icon: {
@@ -233,7 +235,7 @@ export default function CarDetais() {
     })
     .then(response => {
       console.log('Resposta do servidor:', response.data);
-      setComentario(response.data.comentarios)
+      setComentarios(response.data.comentarios)
     }).catch(erro => {
         alert(erro)
     })
@@ -321,6 +323,24 @@ export default function CarDetais() {
     }).catch(erro => {
         alert(erro)
     })
+    await api({
+      method: 'get',
+      url:'/api/list_comment_car',
+      auth:{
+        username: getUser(),
+        password: getPassword()
+      },
+      params: {
+        carro_id: getDetalheCarro().id
+      }
+    })
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+      setComentarios(response.data.comentarios)
+    }).catch(erro => {
+        alert(erro)
+    })
+    setAddComentario('')
   }
 
   return (
@@ -358,14 +378,14 @@ export default function CarDetais() {
 
         <div style={styles.addComents}>
           <p style={styles.TextComentTitle}>Comente aqui</p>
-          <input style={styles.Input} placeholder="Deixe seu comentário sobre o carro aqui" onChange={(e) => setAddComentario(e.target.value)} />
+          <input maxLength="200" value={addComentario} style={styles.Input} placeholder="Deixe seu comentário sobre o carro aqui (máximo de 200 caracteres)" onChange={(e) => setAddComentario(e.target.value)} />
           <button  style={styles.ButtonEnviar} onClick={handleClickAddComentario}>Enviar</button>
         </div>
 
         <div style={styles.containerComents}>
               <p style={styles.TextComentTitle}>Comentários dos Usuários</p>
               <div style={styles.coments}>
-                {comentario.map((comentario) => (<Opinion key={comentario.id} comentario={comentario}/>))}
+                {comentarios.map((comentario, index) => (<Opinion key={index} comentario={comentario} excluir={()=>{setComentarios(comentarios.filter((item, i) => index != i))}}/>))}
               </div>
         </div>
 

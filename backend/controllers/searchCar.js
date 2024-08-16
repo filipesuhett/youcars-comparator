@@ -108,3 +108,23 @@ exports.searchFilterCar = async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
+exports.searchID = async (req, res) => {
+    const { carro_id } = req.query;
+
+    if (!carro_id) {
+        return res.status(200).send({
+            sucesso: 0,
+            cod_erro: 1,
+            erro: 'faltam parametros'
+        });
+    }
+
+    try {
+        const getID = await db.query('SELECT * FROM Carro WHERE id = $1', [carro_id]);
+        return res.status(200).json(getID.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+}

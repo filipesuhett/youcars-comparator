@@ -18,6 +18,7 @@ router.get('/brand', challangeAuth, searchCar.searchBrand);
 router.get('/model', challangeAuth, searchCar.searchModel);
 router.get('/year', challangeAuth,searchCar.searchYear)
 router.get('/filtercar', challangeAuth,searchCar.searchFilterCar)
+router.get('/searchID', challangeAuth, searchCar.searchID)
 
 
 module.exports = router;

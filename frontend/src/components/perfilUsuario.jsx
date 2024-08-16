@@ -21,6 +21,8 @@ const styles = {
         width: '100%'
       },
       coments: {
+        justifyContent: 'center',
+        padding:'15px 0',
         display: 'flex',
         width: '1053px',
         height: '680px',
@@ -50,8 +52,12 @@ const styles = {
         outline: 'none',
       },
       containerInfos: {
+        display: 'flex',
+        flexDirection: 'column',
         width: '70%',
-        margin: '30px 0 0 30px'
+        minHeight: '650px',
+        overflowY: 'scroll',
+        gap: '10px'
       },
       TEXTconfig: {
         color: '#030303',
@@ -134,7 +140,7 @@ const styles = {
 
 const PerfilUsuario = ({display}) => {
     const [login, setLogin] = useState('')
-    const [comentario, setComentario] = useState([]);
+    const [comentarios, setComentarios] = useState([]);
 
     useEffect(() => {
         setLogin(getUser())
@@ -151,7 +157,7 @@ const PerfilUsuario = ({display}) => {
         })
         .then(response => {
           console.log('Resposta do servidor:', response.data);
-          setComentario(response.data.comentarios)
+          setComentarios(response.data.comentarios)
         }).catch(erro => {
             alert(erro)
         })
@@ -167,7 +173,7 @@ const PerfilUsuario = ({display}) => {
           
             <div style={styles.coments}>
               <div style={styles.containerInfos}>
-              {comentario.map((comentario) => (<Opinion key={comentario.id} comentario={comentario} login={login}/>))}
+                {comentarios.map((comentario, index) => (<Opinion key={index} comentario={comentario} login={login} excluir={()=>{setComentarios(comentarios.filter((item, i) => index != i))}}/>))}
                   
               </div>
   
