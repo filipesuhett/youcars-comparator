@@ -1,9 +1,18 @@
+'use client'
 import React from 'react';
 import Image from 'next/image';
 import "../app/globals.css"
+import axios from 'axios';
+import { useState, useEffect } from 'react'
+import {guardarLogin} from '../helpers/util.jsx'
+
+const api = axios.create({
+  baseURL: 'http://localhost:3001'
+});
 
 const styles = {
     containerPerfil: {
+        position: 'relative',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -111,7 +120,51 @@ const styles = {
 };
 
 
-const Settings = ({display}) => {
+const Settings = ({display, setActive, login, senha, }) => {
+  const [novaSenha, setNovaSenha] = useState('')
+  const [repitaNovaSenha, setRepitaNovaSenha] = useState('')
+  const [confirmarSenha, setConfirmarSenha] = useState('')
+
+  function handleClickSetActive(){
+    setActive(true)
+  }
+
+  async function handleClickAtualizarSenha(login, senha){
+    if(confirmarSenha == '') return alert('digite sua senha para atualiza-la')
+    if(confirmarSenha != senha) return alert('a senha que digitou não é igual a atual.')
+    if(novaSenha == '' || repitaNovaSenha == '') return alert('escreva a nova senha que deseja e repita ela.')
+    if(novaSenha != repitaNovaSenha) return alert('as senhas precisam ser iguais')
+    if(novaSenha == senha) return alert('a nova Senha não pode ser igual a atual')
+
+      await api({
+        method: 'post',
+        url:'/api/trocar_senha',
+        auth:{
+          username:login,
+          password:senha
+        },
+        data: {
+          senha_atual: senha,
+          nova_senha: novaSenha,
+          confirma_senha: repitaNovaSenha,
+        }
+        
+      })
+      .then(response => {
+        if(response.data.sucesso = 1){
+          guardarLogin(login, novaSenha)
+          alert('Senha Atualizada')
+        }else{
+          alert('houve um erro, tente mais tarde.')
+        }
+        
+        
+      }).catch(erro => {
+          alert(erro)
+      })
+
+      
+  }
 
   if(display == true){
     return (
@@ -120,7 +173,7 @@ const Settings = ({display}) => {
               <div style={styles.containerInfos}>
                   <div style={styles.excluirPerfil}>
                       <p style={styles.TEXTconfig}>Configuração de Perfil</p>
-                      <button style={styles.ButtonExcluir}>Excluir Conta</button>
+                      <button style={styles.ButtonExcluir} onClick={handleClickSetActive}>Excluir Conta</button>
                   </div>
   
                   <div style={styles.HorizontalDivider}></div>
@@ -129,23 +182,23 @@ const Settings = ({display}) => {
   
                   <div style={styles.containerNomeExibição}>
                       <p>Senha</p>
-                      <input type="text" style={styles.Input} />
+                      <input type="text" style={styles.Input} onChange={(e) => setConfirmarSenha(e.target.value)} />
                   </div>
   
   
                   <div style={styles.containerSenhas}>
                       <div style={styles.containerNomeExibição}>
                           <p>Nova Senha</p>
-                          <input type="text" style={styles.Input} />
+                          <input type="text" style={styles.Input} onChange={(e) => setNovaSenha(e.target.value)} />
                       </div>
   
                       <div style={styles.containerNomeExibição}>
                           <p>Repitir Senha</p>
-                          <input type="text" style={styles.Input} />
+                          <input type="text" style={styles.Input} onChange={(e) => setRepitaNovaSenha(e.target.value)} />
                       </div>
                       
                   </div>
-                  <button style={styles.Salvar}>Salvar Mudanças</button>
+                  <button style={styles.Salvar} onClick={() => handleClickAtualizarSenha(login, senha)}>Salvar Mudanças</button>
                   
               </div>
   

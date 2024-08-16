@@ -122,13 +122,86 @@ const IconBack = () => (
 
 
 export default function Perfil() {
-  const [login, setLogin] = useState('')
+  const [login, setLogin] = useState('');
+  const [senha, setSenha] = useState('');
   const [settingsDisplay, setSettingDisplay] = useState(true)
   const [perfilDisplay, setperfilDisplay] = useState(false)
+  const [active, setActive] = useState(false);
+  const popup = {
+    Container: {
+      width: '100vw',
+      height: '100vh',
+      display: active ? 'flex' : 'none',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute',
+      backgroundColor: 'rgba(0, 0, 0, 0.308)',
+      zIndex: '1'
+    },
+    exclude: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      height: '400px',
+      width: '600px',
+      backgroundColor: 'white',
+      borderRadius: '15px'
+    },
+    text: {
+      height: '200px',
+      padding: '0 30px'
+    },
+    title: {
+      color: '#030303',
+      fontSize: '20px',
+      fontFamily: 'Source Sans 3',
+      fontWeight: 600,
+      lineHeight: '26px',
+      padding: '20px 0 0 0',
+      height: '100px'
+    },
+    ButtonExcluir: {
+      cursor: 'pointer',
+      width: '108px',
+      height: '36px',
+      padding: '0px 8px',
+      border: '0',
+      boxSizing: 'border-box',
+      borderRadius: '24px',
+      backgroundColor: '#df0907',
+      color: '#ffffff',
+      fontSize: '14px',
+      fontFamily: 'Source Sans 3',
+      fontWeight: 700,
+      lineHeight: '16px',
+      outline: 'none',
+      margin: '0 40px 0 0'
+    },
+    ButtonVoltar: {
+      cursor: 'pointer',
+      width: '108px',
+      height: '36px',
+      padding: '0px 8px',
+      border: '0',
+      boxSizing: 'border-box',
+      borderRadius: '24px',
+      backgroundColor: '#030303',
+      color: '#ffffff',
+      fontSize: '14px',
+      fontFamily: 'Source Sans 3',
+      fontWeight: 700,
+      lineHeight: '16px',
+      outline: 'none',
+    }
+  }
+  function handleClickPopup(){
+    setActive(false)
+  }
   
 
   useEffect(() => {
     setLogin(getUser())
+    setSenha(getPassword())
   }, []);
 
   function handleClickComentarios(){
@@ -141,10 +214,42 @@ export default function Perfil() {
     setSettingDisplay(true)
     
   }
+
+  async function handleClickExcluirPerfil(){
+    await api({
+      method: 'post',
+      url:'/api/deletar_usuario',
+      auth:{
+        username:login,
+        password:senha
+      }
+      
+    })
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+      if(response.data.sucesso == 1){
+        logout();
+        window.location.href = '/';
+      }
+    }).catch(erro => {
+        alert("Erro ao excluir perfil")
+    })
+  };
   
   if(login != null){
     return (
       <div style={styles.screen} className="flex h-screen w-screen bg-white">
+        <div style={popup.Container}>
+          <div style={popup.exclude}>
+            <h2 style={popup.title}>Deseja mesmo excluir sua conta?</h2>
+            <p style={popup.text}>Ao escruir a conta todas as suas informações nesse site serão perdidas e você não terá mais acesso ao mesmo. Além de pagar uma taxa de 200 reais (manda o pix)</p>
+            <div>
+              <button style={popup.ButtonExcluir} onClick={handleClickExcluirPerfil}>Excluir Conta</button>
+              <button style={popup.ButtonVoltar} onClick={handleClickPopup} >Voltar</button>
+            </div>
+            
+          </div>
+        </div>
 
         <a style={styles.ButtonSearch} href="/search">Buscar Carros</a>
 
@@ -155,7 +260,7 @@ export default function Perfil() {
             <a style={styles.Button} onClick={handleClickConfiguracao}><IconSettings/> Configurações</a>
         </div>
 
-        < Settings display={settingsDisplay} />
+        < Settings display={settingsDisplay} setActive={setActive} login={login} senha={senha}  />
 
         <PerfilUsuario display={perfilDisplay}/>
   

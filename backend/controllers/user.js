@@ -64,7 +64,7 @@ exports.changePassword = async (req, res) => {
         
         if (req.body.nova_senha !== req.body.confirma_senha) {
             return res.status(200).send({
-                sucesso: 1,
+                sucesso: 0,
                 cod_erro: 4,
                 erro: 'senhas diferentes'
             });
@@ -101,7 +101,7 @@ exports.changePassword = async (req, res) => {
         }
         else {
             return res.status(200).send({
-                sucesso: 1,
+                sucesso: 0,
                 cod_erro: 3,
                 erro: 'senhas diferentes'
             });
