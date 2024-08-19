@@ -101,8 +101,8 @@ const Card = ({ carro, adicionarComparador }) => {
   }
 
   async function handleClickInfoCarro(){
-    await guardarDetalheCarro(carro)
-    window.location.href = "/search/carDetails";
+    window.location.href = `/search/${carro.id}`;
+    //navigate(`/product/${item.id}`); 
   }
 
   return (

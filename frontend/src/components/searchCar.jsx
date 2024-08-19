@@ -3,8 +3,9 @@ import React from 'react';
 import axios from 'axios';
 import { useState } from 'react'
 import { useEffect } from 'react';
-import "../app/globals.css"
-import {getUser, getPassword} from '../helpers/util.jsx'
+import "../app/globals.css";
+import {getUser, getPassword} from '../helpers/util.jsx';
+import { useSearchParams, useRouter } from "next/navigation.js"
 
 const api = axios.create({
     baseURL: 'http://localhost:3001'
@@ -88,53 +89,62 @@ const api = axios.create({
 
 
 const SearchCar = (props) => {
+    const searchParams = useSearchParams()
+    const router = useRouter();
     const [marcas, setMarcas ] = useState([])
-    const [marca, setMarca ] = useState('')
+    const [marca, setMarca ] = useState(searchParams.get('marca') || '')
 
     const [modelos, setModelos ] = useState([])
-    const [modelo, setModelo ] = useState('')
+    const [modelo, setModelo ] = useState(searchParams.get('modelo') || '')
 
     const [anos, setAnos ] = useState([])
-    const [ano, setAno ] = useState('')
+    const [ano, setAno ] = useState(searchParams.get('ano') || '')
 
-    const [ borderOptions, setborderOptions ] = useState([])
-    const [ dropdownMarca, setdropdownMarca ] = useState([])
-    const [ dropdownModelo, setdropdownModelo ] = useState([])
-    const [ dropdownAno, setdropdownAno ] = useState([])
+    const [ dropdownMarca, setdropdownMarca ] = useState(styles.Dropdown1)
+    const [ dropdownModelo, setdropdownModelo ] = useState(styles.Dropdown2)
+    const [ dropdownAno, setdropdownAno ] = useState(styles.Dropdown2)
     const [ login, setLogin ] = useState('')
     const [ senha, setSenha] = useState('')
-  
+
+    const [marca1, setMarca1 ] = useState('')
+    const [modelo1, setModelo1 ] = useState('')
+    const [ano1, setAno1 ] = useState('')
+
+
+    
+
+    useEffect(() => {
+        if(marca != ''){
+          api({
+            method: 'get',
+            url:'/api/filtercar',
+            auth:{
+              username:getUser(),
+              password:getPassword()
+            },
+            params: {
+              marca: marca,
+              modelo: modelo,
+              ano: ano
+            }
+            
+          })
+          .then(response => {
+            console.log('Resposta do servidor:', response.data);
+            props.criarCarros(response.data)
+            setdropdownModelo( styles.Dropdown2 )
+            setdropdownAno( styles.Dropdown2 )
+          }).catch(erro => {
+              alert("Erro ao buscar os Modelos")
+          })
+        } 
+
+    }, [marca, modelo, ano]);
 
     useEffect(() => {
       setLogin(getUser())
       setSenha(getPassword())
 
-      setborderOptions(styles.Card1)
-      setdropdownMarca(styles.Dropdown1)
-      setdropdownModelo(styles.Dropdown2)
-      setdropdownAno(styles.Dropdown2)
-      
-      //   console.log(props.modelo)
-      //   if(props.modelo==null){
-      //     setMarca(props.marca)
-      //     handleClickPesquisarCarro()
-      //     //só tem marca na url
-      //   }
-      //   else{
-      //     if(props.ano == null){
-      //       setMarca(props.marca)
-      //       setModelo(props.modelo)
-      //       handleClickPesquisarCarro()
-      //       //só marca e modelo na url
-      //     }
-      //     else{
-      //       setMarca(props.marca)
-      //       setModelo(props.modelo)
-      //       setAno(props.ano)
-      //       handleClickPesquisarCarro()
-      //       //todos os três na url
-      //     }
-      // }
     }, []);
 
     
@@ -170,7 +180,7 @@ const SearchCar = (props) => {
           password:senha
         },
         params: {
-          marca: marca
+          marca: marca1
         }
         
       })
@@ -193,8 +203,8 @@ const SearchCar = (props) => {
           password:senha
         },
         params: {
-          marca: marca,
-          modelo: modelo
+          marca: marca1,
+          modelo: modelo1
         }
         
       })
@@ -207,47 +217,35 @@ const SearchCar = (props) => {
     }
 
     async function handleClickPesquisarCarro(){
+      const params = new URLSearchParams(window.location.search);
 
-      setborderOptions(styles.Card2)
-        
-      await api({
-        method: 'get',
-        url:'/api/filtercar',
-        auth:{
-          username:login,
-          password:senha
-        },
-        params: {
-          marca: marca,
-          modelo: modelo,
-          ano: ano
-        }
-        
-      })
-      .then(response => {
-        console.log('Resposta do servidor:', response.data);
-        props.criarCarros(response.data)
-        setdropdownModelo( styles.Dropdown2 )
-        setdropdownAno( styles.Dropdown2 )
-      }).catch(erro => {
-          alert("Erro ao buscar os Modelos")
-      })
+      // Adicione ou atualize os parâmetros
+      params.set('marca', marca1);
+      params.set('modelo', modelo1);
+      params.set('ano', ano1);
+
+      // Crie a nova URL com os parâmetros atualizados
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+
+      // Atualize a URL sem recarregar a página
+      window.location.href = newUrl;
+      
     }
 
   return (
-    <div style={borderOptions}>
+    <div style={styles.Card2}>
       
-            <select style={dropdownMarca} defaultValue="" onClick={handleClickGetMarcas} onChange={(e) => setMarca(e.target.value)}>
+            <select style={dropdownMarca} defaultValue="" onClick={handleClickGetMarcas} onChange={(e) => setMarca1(e.target.value)}>
               <option value=""> {props.label ?? `Selecione uma Marca` }</option>
               {marcas.map((value) => (<option value={value.marca} key={value.marca}>{value.marca}</option>))}
             </select>
 
-            <select style={dropdownModelo} defaultValue="" onClick={handleClickGetModelo}  onChange={(e) => setModelo(e.target.value)}>
+            <select style={dropdownModelo} defaultValue="" onClick={handleClickGetModelo}  onChange={(e) => setModelo1(e.target.value)}>
               <option value="" > {props.label ?? `Selecione um Modelo` }</option>
               {modelos.map((value) => (<option value={value.modelo} key={value.modelo}>{value.modelo}</option>))}
             </select>
 
-            <select style={dropdownAno} defaultValue="" onClick={handleClickGetAno} onChange={(e) => setAno(e.target.value)}>
+            <select style={dropdownAno} defaultValue="" onClick={handleClickGetAno} onChange={(e) => setAno1(e.target.value)}>
               <option value="" > {props.label ?? `Selecione um Ano` }</option>
               {anos.map((value) => (<option value={value.ano} key={value.ano} >{value.ano}</option>))}
             </select>

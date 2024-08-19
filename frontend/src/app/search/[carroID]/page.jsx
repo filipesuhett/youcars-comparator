@@ -9,7 +9,7 @@ import axios from 'axios';
 import CartextInfo from "../../../components/cartextInfo.jsx"
 import "../../globals.css"
 import { useState, useEffect } from 'react'
-import { getDetalheCarro, getUser, getPassword } from '../../../helpers/util.jsx'
+import { getUser, getPassword } from '../../../helpers/util.jsx'
 import { useSearchParams } from "next/navigation.js"
 
 const api = axios.create({
@@ -167,7 +167,7 @@ const styles = {
 const defaultImage = "/img/carro2.png"
 
 
-export default function CarDetais() {
+export default function CarDetais({ params }) {
   const [carro, setCarro] = useState([]);
   const [comentarios, setComentarios] = useState([]);
   const [addComentario, setAddComentario] = useState('');
@@ -198,9 +198,26 @@ export default function CarDetais() {
 );
 
   useEffect(() => {
-    setCarro(getDetalheCarro())
     setLogin(getUser())
     setSenha(getPassword())
+    api({
+      method: 'get',
+      url:'/api/searchID',
+      auth:{
+        username:getUser(),
+        password:getPassword()
+      },
+      params: {
+        carro_id: params.carroID
+      }
+      
+    })
+    .then(response => {
+      console.log(response.data)
+      setCarro(response.data[0])
+    }).catch(erro => {
+        alert(erro)
+    })
 
     api({
       method: 'get',
@@ -210,7 +227,7 @@ export default function CarDetais() {
         password:getPassword()
       },
       params: {
-        carro_id: getDetalheCarro().id
+        carro_id: params.carroID
       }
       
     })
@@ -230,7 +247,7 @@ export default function CarDetais() {
         password: getPassword()
       },
       params: {
-        carro_id: getDetalheCarro().id
+        carro_id: params.carroID
       }
     })
     .then(response => {
@@ -331,7 +348,7 @@ export default function CarDetais() {
         password: getPassword()
       },
       params: {
-        carro_id: getDetalheCarro().id
+        carro_id: carro.id
       }
     })
     .then(response => {

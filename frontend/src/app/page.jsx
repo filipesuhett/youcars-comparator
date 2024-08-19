@@ -171,12 +171,8 @@ const styles = {
   };
 
 export default function Home() {
-  const [login, setLogin] = useState('null')
-  useEffect(() => {
-    setLogin(getUser())
-  }, []);
   
-  if(login != 'null'){
+  if(getUser() != 'null'){
     return (
       <div className="flex w-screen flex-col items-center justify-between bg-white">
           <nav style={styles.Header}>
