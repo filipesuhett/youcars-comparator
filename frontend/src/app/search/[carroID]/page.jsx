@@ -9,14 +9,14 @@ import axios from 'axios';
 import CartextInfo from "../../../components/cartextInfo.jsx"
 import "../../globals.css"
 import { useState, useEffect } from 'react'
-import { getUser, getPassword } from '../../../helpers/util.jsx'
+import { getUser, getPassword, guardarCarro } from '../../../helpers/util.jsx'
 import { useSearchParams } from "next/navigation.js"
+import Globalcomparator from "../../../components/globalcomparator.jsx"
 
 const api = axios.create({
   baseURL: 'http://localhost:3001'
 })
 
-let verificado = true
 const styles = {
   imge: {
     width: '672px',
@@ -35,14 +35,14 @@ const styles = {
   },
   containerInfo: {
     display: 'flex',
-    width: '100vw',
+    width: '100%',
     justifyContent: 'space-between',
     margin: '16px 0 0 0'
   },
   Button: {
     cursor: 'pointer',
     width: '350px',
-    height: '38px',
+    height: '45px',
     padding: '0px 8px',
     border: '0',
     boxSizing: 'border-box',
@@ -60,8 +60,8 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
-    width: '249px',
-    height: '36px',
+    width: '100px',
+    height: '45px',
     padding: '0px 8px',
     margin: '0 0 45px 0 ',
     border: '0',
@@ -98,7 +98,7 @@ const styles = {
   containerButton:{
     display:'flex',
     flexDirection: 'column',
-    alignItems: 'end',
+    alignItems: 'center',
     margin: "93px 34px 0 0"
   },
   containerTextCarro: {
@@ -115,7 +115,7 @@ const styles = {
   addComents: {
     display: 'flex',
     flexDirection: 'column',
-    width: '100vw',
+    width: '100%',
     padding: '0 0 0 24px',
   },
   TextComentTitle: {
@@ -125,7 +125,7 @@ const styles = {
     lineHeight: '28px',
   },
   Input: {
-    width: '1375px',
+    width: '1200px',
     height: '50px',
     border: '0',
     boxSizing: 'border-box',
@@ -197,9 +197,12 @@ export default function CarDetais({ params }) {
   </svg>
 );
 
-  useEffect(() => {
+  useEffect(()=>{
     setLogin(getUser())
     setSenha(getPassword())
+  },[])
+
+  useEffect( () => {
     api({
       method: 'get',
       url:'/api/searchID',
@@ -318,6 +321,28 @@ export default function CarDetais({ params }) {
     
   }
 
+  async function handleClickReloadComents(){
+    await api({
+      method: 'get',
+      url:'/api/list_comment_car',
+      auth:{
+        username: getUser(),
+        password: getPassword()
+      },
+      params: {
+        carro_id: params.carroID
+      }
+    })
+    .then(response => {
+      console.log('Resposta do servidor:', response.data);
+      const coment = response.data.comentarios
+      setComentarios(coment)
+    }).catch(erro => {
+        alert(erro)
+    })
+
+  }
+
   async function handleClickAddComentario(){
     if(addComentario == '') return alert('Não pode enviar comentário vazio')
     await api({
@@ -357,12 +382,17 @@ export default function CarDetais({ params }) {
     }).catch(erro => {
         alert(erro)
     })
-    setAddComentario('')
   }
 
+  function adicionarComparador(){
+    guardarCarro(carro)
+}
+
+if(getUser == 'null'){
   return (
-    <div className="flex w-screen flex-col bg-white">
+    <div className="flex w-full flex-col bg-white">
       <Header/>
+      <Globalcomparator/>
 
       <div style={styles.containerInfo}>
         
@@ -384,7 +414,7 @@ export default function CarDetais({ params }) {
               </div>
               <div style={styles.containerButton}>
                 <button style={styles.ButtonFavorite} onClick={handleClickAddFavorite}><IconComponent /></button>
-                <button style={styles.Button}>Adicionar Comparador</button>
+                <button style={styles.Button} onClick={adicionarComparador}>Adicionar Comparador</button>
               </div>
             </div>
 
@@ -402,7 +432,7 @@ export default function CarDetais({ params }) {
         <div style={styles.containerComents}>
               <p style={styles.TextComentTitle}>Comentários dos Usuários</p>
               <div style={styles.coments}>
-                {comentarios.map((comentario, index) => (<Opinion key={index} comentario={comentario} excluir={()=>{setComentarios(comentarios.filter((item, i) => index != i))}}/>))}
+                {comentarios.map((comentario, index) => (<Opinion key={index} comentario={comentario} pagUsuario={false} excluir={handleClickReloadComents}/>))}
               </div>
         </div>
 
@@ -410,4 +440,8 @@ export default function CarDetais({ params }) {
     </div>
     
   );
+}else{
+  window.location.href = '/login'
+}
+  
 }

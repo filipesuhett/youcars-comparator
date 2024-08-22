@@ -7,9 +7,10 @@ import ResulComp from "../../components/resulComp.jsx"
 import Opinion from "../../components/opinion.jsx"
 import SearchCar from "../../components/searchCar.jsx"
 import { useState, useEffect } from 'react'
-import { guardarCarros } from '../../helpers/util.jsx'
+import {guardarCarro, getCarros, getUser } from '../../helpers/util.jsx'
 import "../globals.css"
 import axios from 'axios';
+import Globalcomparator from "../../components/globalcomparator.jsx"
 
 const api = axios.create({
   baseURL: 'http://localhost:3000'
@@ -51,11 +52,6 @@ const styles = {
     fontFamily: 'Open Sans',
     fontWeight: '500',
     lineHeight: '31px',
-  },
-  TextComparador:{
-    fontSize: '32px',
-    fontFamily: 'Roboto',
-    lineHeight: '42px',
   },
   Dropdown: {
     cursor: 'pointer',
@@ -130,22 +126,6 @@ export default function Search() {
   const [ containerCard, setcontainerCard ] = useState(styles.containerCard2)
   const [ containerCardOptions, setcontainerCardOptions ] = useState(styles.containerCardOptions2)
 
-  const [popupVisivel, setPopupVisivel] = useState(false);
-
-  const [ carrosComparador, setcarrosComparador ] = useState([])
-
-  const popupComparator = {
-      position: 'absolute',
-      display: popupVisivel ? 'flex' : 'none',
-      justifyContent: 'center',
-      alignItems:'center',
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: 'rgba(0, 0, 0, 0.199)',
-      zIndex: '1',
-  }
-  
-
   function criarCarros( carros ){
     setListaCarro( carros )
     setcontainerCard(styles.containerCard2)
@@ -154,77 +134,41 @@ export default function Search() {
   }
   
   function adicionarComparador( carro ){
-      if (carrosComparador.some(c => c.id === carro.id)) {
-        alert('Carro já adicionado');
-        return;
-      }
-      if (carrosComparador.length == 3){
-        alert('Você Pode Adicionar Apenas 3 Carros')
-        return;
-      }
-      setcarrosComparador([...carrosComparador, carro])
+      guardarCarro(carro)
   }
 
-  function removerComparador(carro) {
-    // Lógica para remover o carro do comparador
-    const novoComparador = carrosComparador.filter(c => c.id !== carro.id);
-    setcarrosComparador(novoComparador);
-  }
-
-  function handleClickChangeDisplay(){
-    if(popupVisivel){
-      setPopupVisivel(false)
-    }else{
-      setPopupVisivel(true)
-    }
-    
-  }
-
-  async function handleClickCarrosParaComparar(){
-    await guardarCarros( carrosComparador )
-    window.location.href = "/search/compareTool";
-  }
-
-  return (
-    <div className=" bg-white flex relative h-screen w-screen flex-col items-center">
-        <Header/>
-        <div style={popupComparator}>
-          <div style={styles.popupComparatorOptions}>
-          <div style={styles.sairPopup} onClick={handleClickChangeDisplay}>X</div>
-            <p style={styles.TextComparador}>Carros Adicionados</p>
-            <div style={styles.popupComparatorOptionsCar}>
-            {carrosComparador.map((carro) => (<CardCompare key={carro.id} carro={carro} removerCarro={removerComparador} />))}
-            </div>
-            <button style={styles.Button} onClick={handleClickCarrosParaComparar} >Comparar</button>
-          </div>
-        </div>
-        <div style={containerCardOptions}>
-          <div className="flex mt-28">
-            <SearchCar criarCarros={criarCarros} />
-          </div>
-          
-          <div style={containerCard}>
-            <div className="flex justify-between w-full h-10 my-20 pr-20">
-              <h2 className="text-2xl">Detalhes dos Carros Pesquisados</h2>
-              <p className="text-xl">{`${listaCarro.length} resultados`}</p>
-            </div>
-            <div className="flex flex-wrap w-full h-2/3 gap-20 overflow-hidden overflow-y-auto">
-            {listaCarro.map((carro) => (<Card key={carro.id} adicionarComparador={adicionarComparador} carro={ carro } />))}
-            </div>
-            <div style={styles.containerButton}>
-              <button style={styles.Button} onClick={handleClickChangeDisplay}>Comparar Carros</button>
+  if(getUser() != 'null'){
+    return (
+      <div className=" bg-white flex relative h-screen w-screen flex-col items-center">
+        <Globalcomparator/>
+          <Header/>
+          <div style={containerCardOptions}>
+            <div className="flex mt-28">
+              <SearchCar criarCarros={criarCarros} />
             </div>
             
+            <div style={containerCard}>
+              <div className="flex justify-between w-full h-10 my-20 pr-20">
+                <h2 className="text-2xl">Detalhes dos Carros Pesquisados</h2>
+                <p className="text-xl">{`${listaCarro.length} resultados`}</p>
+              </div>
+              <div className="flex flex-wrap w-full h-2/3 gap-20 overflow-hidden overflow-y-auto">
+              {listaCarro.map((carro) => (<Card key={carro.id} adicionarComparador={adicionarComparador} carro={ carro } />))}
+              </div>
+              
+            </div>
           </div>
-        </div>
-        
-        
+          <Footer position='fixed'/>
+  
+      </div>
+      
+    );
 
-        
-        
-        <Footer position='fixed'/>
+  }
+  else{
+    return window.location.href = '/login'
 
-    </div>
-    
-  );
+  }
+
+  
 }

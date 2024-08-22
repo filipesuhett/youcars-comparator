@@ -7,7 +7,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     bottom: '0',
-    width: '100vw',
+    width: '100%',
     height: '40px',
     backgroundColor: '#f43030',
   },

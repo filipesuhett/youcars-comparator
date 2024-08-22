@@ -63,8 +63,8 @@ const styles = {
   },
   buttonAdicionar: {
     cursor: 'pointer',
-    width: '404px',
-    height: '20px',
+    width: '200px',
+    height: '30px',
     padding: '0px 8px',
     border: '0',
     boxSizing: 'border-box',
@@ -140,6 +140,11 @@ const CardFavorite = (carro ) => {
       }
     })
   }
+
+  function handleClickIrCarro() {
+    window.location.href = `/search/${carro.carro.id}`;
+  }
+
   return (
     <div style={styles.Card}>
 
@@ -152,7 +157,7 @@ const CardFavorite = (carro ) => {
             height={236}
             alt="Picture of the author"/>
 
-            <a href="" style={styles.buttonCircle}></a>
+            <button style={styles.buttonCircle} onClick={handleClickIrCarro}>{'=>'}</button>
 
         </div>
         

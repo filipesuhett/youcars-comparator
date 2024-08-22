@@ -15,6 +15,7 @@ import React from "react"
 import { useEffect, useState } from "react"
 
 import {getUser} from '../helpers/util.jsx'
+import Globalcomparator from "../components/globalcomparator.jsx"
 
 const api = axios.create({
   baseURL: 'http://localhost:3001'
@@ -43,7 +44,7 @@ const styles = {
       gridTemplateColumns: '1fr 1fr',
       gridTemplateRows: '1fr',
       height: '90vh',
-      width: '100vw'
+      width: '100%'
     },
     Button: {
       display: 'Flex',
@@ -138,7 +139,7 @@ const styles = {
     },
     MaisComentadoCarHome: {
       display: 'flex',
-      width: '100vw',
+      width: '100%',
       justifyContent: 'center',
       gap: '40px',
 
@@ -170,11 +171,14 @@ const styles = {
     }
   };
 
+
+
 export default function Home() {
   
   if(getUser() != 'null'){
     return (
-      <div className="flex w-screen flex-col items-center justify-between bg-white">
+      <div className="flex w-full flex-col items-center justify-between bg-white">
+        <Globalcomparator/>
           <nav style={styles.Header}>
             <p style={styles.Text}>You Cars</p>
             <a style={styles.Text} href="/perfil">Perfil</a>
@@ -204,10 +208,7 @@ export default function Home() {
           <section style={styles.CarHome}>
           <h2 style={styles.TitleCarHome}>Carros mais comentados</h2>
             <div style={styles.MaisComentadoCarHome}>
-            <CardComent/>
-            <CardComent/>
-            <CardComent/>
-            <CardComent/>
+            
             </div>
             
             <div style={styles.InfoCarHome}>
@@ -262,10 +263,7 @@ export default function Home() {
       <section style={styles.CarHome}>
       <h2 style={styles.TitleCarHome}>Carros mais comentados</h2>
         <div style={styles.MaisComentadoCarHome}>
-        <CardComent/>
-        <CardComent/>
-        <CardComent/>
-        <CardComent/>
+          
         </div>
         
         <div style={styles.InfoCarHome}>

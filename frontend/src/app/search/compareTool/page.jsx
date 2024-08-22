@@ -3,7 +3,8 @@ import Footer from "../../../components/footer.jsx"
 import Header from "../../../components/header.jsx"
 import ResulComp from "../../../components/resulComp.jsx"
 import Opinion from "../../../components/opinion.jsx"
-import { getcarros } from '../../../helpers/util.jsx'
+import Globalcomparator from "../../../components/globalcomparator.jsx"
+import { getcarros, getUser } from '../../../helpers/util.jsx'
 import "../../globals.css"
 import { useState, useEffect } from 'react'
 import React from "react"
@@ -37,23 +38,30 @@ export default function Search() {
   }, []);
 
 
-  
+  if(getUser() != 'null'){
+    return (
+      <div className="flex h-screen w-screen flex-col items-center bg-white">
+            <Header />
+            <Globalcomparator/>
+            <h1 style={styles.Text}>Resultado da Comparação</h1>
+            <div className="flex gap-20 items-center">
+            {carros.map((carro, index) => (
+            <React.Fragment key={carro.id}>
+              <ResulComp key={carro.id} carro={carro} />
+              {index !== carros.length - 1 && <p>VS</p>}
+            </React.Fragment>
+          ))}
+            </div>
+            
+            <Footer position="fixed bottom-0" />
+      </div>
+      
+    );
 
-  return (
-    <div className="flex h-screen w-screen flex-col items-center bg-white">
-          <Header />
-          <h1 style={styles.Text}>Resultado da Comparação</h1>
-          <div className="flex gap-20 items-center">
-          {carros.map((carro, index) => (
-          <React.Fragment key={carro.id}>
-            <ResulComp key={carro.id} carro={carro} />
-            {index !== carros.length - 1 && <p>VS</p>}
-          </React.Fragment>
-        ))}
-          </div>
-          
-          <Footer position="fixed bottom-0" />
-    </div>
-    
-  );
+  }
+  else{
+    window.location.href = '/login'
+  }
+
+  
 }

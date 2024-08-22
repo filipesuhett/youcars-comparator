@@ -65,20 +65,57 @@ const styles = {
   },
   excluir:{
     position: 'absolute',
-    right: '10px',
+    display:'flex',
+    right: '70px',
+    top: '10px',
+  },
+  Icon:{
+    width:'25px',
+    height:'25px'
+  },
+  irCarro:{
+    position: 'absolute',
+    right: '20px',
+    top: '10px'
+  },
+  buttonCircle: {
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '30px',
+    height: '30px',
+    border: '0',
+    boxSizing: 'border-box',
+    borderRadius: '32px',
+    color: '#ffffff',
+    backgroundColor: '#f43030',
+    outline: 'none',
+    position: 'absolute',
+    right: '20px',
     top: '10px'
   }
 
 };
 
+const IconTrash = () => (
+  <svg style={styles.Icon} viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M3 6l3 18h12l3-18H3zm14 4v12H7V10h10zm-7-6V3h4v1h5v2H5V4h5z"></path>
+  </svg>
+);
 
-const Opinion = ({comentario, login, excluir}) => {
+
+const Opinion = ({comentario, login, excluir, pagUsuario}) => {
   const [excluirComentario, setExcluirComentario] = useState(false)
   useEffect(() => {
-    if(getUser() == comentario.login || getUser() == login){
+    if(getUser() == comentario.login || login){
       setExcluirComentario(true)
+    }else{
+      setExcluirComentario(false)
     }
-  }, []);
+  }, [comentario.login]);
+  
   async function handleClickExcluirComentario(){
     await api({
       method: 'post',
@@ -100,13 +137,20 @@ const Opinion = ({comentario, login, excluir}) => {
         alert(erro)
     })
   }
+
+  function handleClickIrCarro() {
+    window.location.href = `/search/${comentario.carro_id}`;
+  }
+
   return (
     <div style={styles.Card}>
-      {excluirComentario ? <button style={styles.excluir} onClick={handleClickExcluirComentario}>excluir</button> : <p></p>}
+      {excluirComentario ? <button style={styles.excluir} onClick={handleClickExcluirComentario} title="Excluir comentário"><IconTrash/></button> : <p></p>}
+      {pagUsuario ? <button style={styles.buttonCircle} onClick={handleClickIrCarro} title="Ir para o carro">{'=>'}</button> : <p></p>}
         
       <div style={styles.userComment}>
 
         <p style={styles.name}>{login ?? comentario.login}</p>
+        <br></br>
         <p style={styles.text}>{comentario.texto ?? "Caralho achei esse Carro Sensacional, em 2023 eu comprei 7 deles para doar para um ong e eles me agradeceram imensamente" } </p>
       </div>
       

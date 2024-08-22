@@ -50,33 +50,6 @@ const styles = {
     display: 'Flex',
     flexDirection: "Column",
   },
-  buttonLike: {
-    cursor: 'pointer',
-    width: '32px',
-    height: '32px',
-    border: '0',
-    boxSizing: 'border-box',
-    borderRadius: '24px',
-    color: '#ffffff',
-    backgroundColor: '#f43030',
-    outline: 'none',
-  },
-  buttonAdicionar: {
-    cursor: 'pointer',
-    width: '78px',
-    height: '42px',
-    padding: '0px 8px',
-    border: '0',
-    boxSizing: 'border-box',
-    borderRadius: '12px',
-    backgroundColor: '#f43030',
-    color: '#ffffff',
-    fontSize: '14px',
-    fontFamily: 'Source Sans 3',
-    fontWeight: 500,
-    lineHeight: '18px',
-    outline: 'none',
-  },
   pPreco: {
     color: '#030303',
     fontSize: '16px',
@@ -88,16 +61,16 @@ const styles = {
 
 const defaultImage = "/img/carro.png"
 
-const CardComent = (props) => {
+const CardComent = ({ carro }) => {
   return (
     <div style={styles.Card}>
 
-        <p style={styles.text}>{props.nome ?? "Uno Prateado"}</p> 
+        <p style={styles.text}>{carro.modelo ?? "Uno Prateado"}</p> 
 
         <Image
         priority={true}
         style={styles.imge}
-        src={props.urlIMG ?? defaultImage }
+        src={carro.img ?? defaultImage }
         width={241}
         height={236}
         alt="Picture of the author"/>
@@ -105,10 +78,11 @@ const CardComent = (props) => {
           <div style={styles.infoEadicionar}>
             <div style={styles.preco}>
               <p style={styles.pPreco}>Preço</p>
-              <p>{props.preco ?? "20.50"}</p>
+              <p>{carro.preco ?? "20.50"}</p>
             </div>
             <div style={styles.like}>
-              <p>{props.quantidadeLike ?? "2.5k"}</p>
+              <p style={styles.pPreco}>Ano</p>
+              <p>{carro.ano ?? "2000"}</p>
             </div>
           </div>
         
