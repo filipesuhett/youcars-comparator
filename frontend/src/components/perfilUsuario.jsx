@@ -173,7 +173,7 @@ const PerfilUsuario = ({display}) => {
           
             <div style={styles.coments}>
               <div style={styles.containerInfos}>
-                {comentarios.map((comentario, index) => (<Opinion key={index} comentario={comentario} login={login} excluir={()=>{setComentarios(comentarios.filter((item, i) => index != i))}}/>))}
+                {comentarios.map((comentario, index) => (<Opinion key={index} comentario={comentario} login={login} pagUsuario={true} excluir={()=>{setComentarios(comentarios.filter((item, i) => index != i))}}/>))}
                   
               </div>
   

@@ -7,6 +7,8 @@ import PerfilUsuario from '../../components/perfilUsuario.jsx';
 import { getDetalheCarro, getUser, getPassword } from '../../helpers/util.jsx'
 import Opinion from "../../components/opinion.jsx"
 import { useState, useEffect } from 'react'
+import { logout } from '../../helpers/util.jsx';
+import Globalcomparator from '../../components/globalcomparator.jsx';
 
 const api = axios.create({
   baseURL: 'http://localhost:3001'
@@ -54,13 +56,10 @@ const styles = {
     color: '#030303',
     fill: '#030303',
     fontSize: '26px',
-    margin: '0 6px 0 0',    
-    top: '176px',
-    left: '40px',
+    margin: '0 6px 0 0',
     width: '25px',
     height: '25px',
   },
-  
   ButtonSearch: {
     position: 'absolute',
     cursor: 'pointer',
@@ -79,7 +78,8 @@ const styles = {
     lineHeight: '20px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    zIndex: '1'
   },
   voltar: {
     display: 'flex',
@@ -117,6 +117,13 @@ const IconBack = () => (
     </path>
     <path d="M17.77 3.77 16 2 6 12l10 10 1.77-1.77L9.54 12z">
     </path>
+  </svg>
+);
+
+const IconLogout = () => (
+  <svg style={styles.Icon} viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M17 7v-3H7v16h10v-3h2v5H5V2h14v5h-2zm-4 5v-3h-4v-2h6v7h-6v-2h4z"></path>
   </svg>
 );
 
@@ -236,10 +243,16 @@ export default function Perfil() {
         alert(erro)
     })
   };
+
+  function handleClickLogout(){
+    logout();
+    window.location.href = '/';
+  }
   
-  if(login != null){
+  if(getUser() != 'null'){
     return (
       <div style={styles.screen} className="flex h-screen w-screen bg-white">
+        <Globalcomparator/>
         <div style={popup.Container}>
           <div style={popup.exclude}>
             <h2 style={popup.title}>Deseja mesmo excluir sua conta?</h2>
@@ -259,6 +272,8 @@ export default function Perfil() {
             <a style={styles.voltar} href="/search"><IconBack/> Voltar a pesquisa</a>
             <a style={styles.Button}  onClick={handleClickComentarios}><IconPerson/> Comentários</a>
             <a style={styles.Button} onClick={handleClickConfiguracao}><IconSettings/> Configurações</a>
+
+            <a style={styles.Button} onClick={handleClickLogout}><IconLogout/> Logout</a>
         </div>
 
         < Settings display={settingsDisplay} setActive={setActive} login={login} senha={senha}  />
@@ -270,9 +285,7 @@ export default function Perfil() {
     );
   }
   else{
-    <div>
-        <p>Faça login para visializar essa página</p>
-    </div>
+    window.location.href('/login')
   }
   
 }

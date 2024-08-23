@@ -9,7 +9,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: "Column",
-    width: '223px',
+    width: '300px',
     height: '520px',
     backgroundColor: '#ffffff',
     borderRadius: '8px',
@@ -113,12 +113,12 @@ const ResulComp = ({ carro }) => {
             </div>
             
             <div style={styles.informacoes}>
-            <p style={styles.textInfo}>Consumo</p>
+            <p style={styles.textInfo}>Consumo cidade</p>
             <p style={styles.textresult}>{carro.consucidade ?? "consumoCITY"}</p>
             </div>
 
             <div style={styles.informacoes}>
-            <p style={styles.textInfo}>Consumo</p>
+            <p style={styles.textInfo}>Consumo estrada</p>
             <p style={styles.textresult}>{carro.consuestrada ?? "consumo"}</p>
             </div>
             

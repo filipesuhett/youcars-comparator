@@ -8,12 +8,12 @@ export const metadata = {
   description: "Criado Pelos Alunos de BSI IFES Serra",
 };
 export default function RootLayout({ children }) {
-  return (
-    <html lang="pt-br">
-      <body className={inter.className}>
-        {children}
-        <div></div>
-      </body>
-    </html>
-  );
+    return (
+      <html lang="pt-br">
+        <body className={inter.className}>
+          {children}
+        </body>
+      </html>
+    );
+  
 }

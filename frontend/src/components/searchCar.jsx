@@ -219,15 +219,12 @@ const SearchCar = (props) => {
     async function handleClickPesquisarCarro(){
       const params = new URLSearchParams(window.location.search);
 
-      // Adicione ou atualize os parâmetros
       params.set('marca', marca1);
       params.set('modelo', modelo1);
       params.set('ano', ano1);
 
-      // Crie a nova URL com os parâmetros atualizados
+      
       const newUrl = `${window.location.pathname}?${params.toString()}`;
-
-      // Atualize a URL sem recarregar a página
       window.location.href = newUrl;
       
     }

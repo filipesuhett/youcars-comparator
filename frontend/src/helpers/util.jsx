@@ -16,6 +16,30 @@ export function getPassword(){
     return localStorage.getItem('password')
 }
 
+export function guardarCarro(carro) {
+    let carros = JSON.parse(localStorage.getItem("carros")) || [];
+
+    const carroJaAdicionado = carros.some(c => c.id === carro.id);
+
+    if (carroJaAdicionado) {
+        return alert('Carro já adicionado');
+    }
+
+    if (carros.length >= 3) {
+        return alert('O limite de carros no comparador é 3');
+    }
+
+    carros.push(carro);
+
+    localStorage.setItem("carros", JSON.stringify(carros));
+}
+
+
+
+export function getCarros(){
+    return JSON.parse(localStorage.getItem("carros"))
+}
+
 export function guardarCarros(carros){
     localStorage.setItem("carros", JSON.stringify(carros));
 }

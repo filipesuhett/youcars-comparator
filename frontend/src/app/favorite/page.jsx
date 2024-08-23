@@ -7,7 +7,8 @@ import "../globals.css"
 import { useState, useEffect } from 'react'
 import {getUser, getPassword} from '../../helpers/util.jsx'
 import React from "react"
-import axios from 'axios';
+import axios from 'axios'; 
+import Globalcomparator from "../../components/globalcomparator.jsx"
 
 const api = axios.create({
   baseURL: 'http://localhost:3001/api/'
@@ -16,8 +17,14 @@ const api = axios.create({
 const styles = {
   ContainerResult: {
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
-    gap: '80px'
+    justifyContent: 'center',
+    gap: '80px',
+    margin: '0 0 50px 0',
+    flex: '1',
+    width:'100%'
+
   },
   Text: {
     color: '#030303',
@@ -54,16 +61,23 @@ export default function Search() {
     })
   }, []);
 
+  if(getUser() != 'null'){
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center bg-white">
+            <Header />
+            <Globalcomparator/>
+            <h1 style={styles.Text}>Seus Carros Favoritos</h1>
+            <div style={styles.ContainerResult}>
+              {carros.map((carro) => (<CardFavorite key={carro.carro[0].id} carro={carro.carro[0]} />))}
+            </div>
+            <Footer />
+      </div>
+      
+    );
 
-  return (
-    <div className="flex h-screen w-screen flex-col items-center bg-white">
-          <Header />
-          <h1 style={styles.Text}>Seus Carros Favoritos</h1>
-          <div style={styles.ContainerResult}>
-            {carros.map((carro) => (<CardFavorite key={carro.carro[0].id} carro={carro.carro[0]} />))}
-          </div>
-          <Footer position="fixed bottom-0" />
-    </div>
-    
-  );
+  }
+  else{
+    return window.location.href = '/login'
+  }
+
 }
