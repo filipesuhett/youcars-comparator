@@ -182,3 +182,32 @@ exports.listCommentCar = async (req, res) => {
         });
     }
 };
+
+exports.mostComments = async (req, res) => {
+    try {
+        const result = await db.query(
+            `SELECT c.*
+             FROM Carro c
+             JOIN (
+                 SELECT carro_id, COUNT(*) AS qtde_comentarios
+                 FROM Comentario
+                 GROUP BY carro_id
+                 ORDER BY qtde_comentarios DESC
+                 LIMIT 4
+             ) sub ON c.id = sub.carro_id
+             ORDER BY sub.qtde_comentarios DESC`
+        );
+        
+        res.status(200).send({
+            sucesso: 1,
+            carros: result.rows
+        });
+    } catch (err) {
+        const errorMsg = "Erro BD: " + err;
+        res.status(500).send({
+            sucesso: 0,
+            cod_erro: 2,
+            erro: errorMsg
+        });
+    }
+}
