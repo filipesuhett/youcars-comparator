@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import "../app/globals.css"
+import { handleClientScriptLoad } from 'next/script';
 const styles = {
   
   Card: {
@@ -8,7 +9,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: "Column",
-    width: '306px',
+    width: '300px',
     height: '324px',
     backgroundColor: '#e5e7eb',
     borderRadius: '24px',
@@ -16,8 +17,8 @@ const styles = {
     boxSizing: 'border-box',
   },
   imge: {
-    width:'241px',
-    height:'236px',
+    width:'200px',
+    height:'150px',
     borderRadius: '24px',
     backgroundPosition: 'center center',
     backgroundSize: 'cover',
@@ -27,12 +28,12 @@ const styles = {
     display: 'Flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100px',
+    height: '90px',
     width: '100%',
     color: '#030303',
     fontSize: '18px',
     fontFamily: 'Source Sans 3',
-    fontWeight: 700,
+    fontWeight: '700',
     lineHeight: '22px',
   },
   infoEadicionar: {
@@ -40,7 +41,7 @@ const styles = {
     justifyContent: 'space-around',
     alignItems: 'end',
     width: '100%',
-    height:'80px'
+    height:'60px'
   },
   preco: {
     display: 'Flex',
@@ -61,9 +62,14 @@ const styles = {
 
 const defaultImage = "/img/carro.png"
 
+async function handleClickInfoCarro(carro){
+  window.location.href = `/search/${carro.id}`;
+  //navigate(`/product/${item.id}`); 
+}
+
 const CardComent = ({ carro }) => {
   return (
-    <div style={styles.Card}>
+    <button style={styles.Card} onClick={() => handleClickInfoCarro(carro)}>
 
         <p style={styles.text}>{carro.modelo ?? "Uno Prateado"}</p> 
 
@@ -71,9 +77,10 @@ const CardComent = ({ carro }) => {
         priority={true}
         style={styles.imge}
         src={carro.img ?? defaultImage }
-        width={241}
-        height={236}
-        alt="Picture of the author"/>
+        width={300}
+        height={300}
+        alt="Picture of the author"
+        />
 
           <div style={styles.infoEadicionar}>
             <div style={styles.preco}>
@@ -86,7 +93,7 @@ const CardComent = ({ carro }) => {
             </div>
           </div>
         
-    </div>
+    </button>
   );
 };
 

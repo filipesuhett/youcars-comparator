@@ -24,8 +24,8 @@ const styles = {
         justifyContent: 'center',
         padding:'15px 0',
         display: 'flex',
-        width: '1053px',
-        height: '680px',
+        width: '1000px',
+        height: '640px',
         backgroundColor: '#a9a9a9',
         borderRadius: '24px',
       },
@@ -55,7 +55,6 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         width: '70%',
-        minHeight: '650px',
         overflowY: 'scroll',
         gap: '10px'
       },
@@ -123,7 +122,7 @@ const styles = {
       },
       title: {
         color: '#030303',
-        fontSize: '48px',
+        fontSize: '30px',
         fontFamily: 'Source Sans 3',
         fontWeight: 600,
         lineHeight: '48px',

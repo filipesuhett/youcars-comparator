@@ -1,12 +1,6 @@
 'use client'
 
-import Card from "../components/cardCar.jsx"
-import CardCompare from "../components/cardCompare.jsx"
 import Footer from "../components/footer.jsx"
-import Header from "../components/header.jsx"
-import ResulComp from "../components/resulComp.jsx"
-import Opinion from "../components/opinion.jsx"
-import ButtonTeste from "../components/searchCar.jsx"
 import CardComent from "../components/cardComent.jsx"
 import Image from 'next/image';
 import './globals.css';
@@ -80,19 +74,21 @@ const styles = {
       display: 'Flex',
       flexDirection: 'column',
       gridColumn: '1 / 2',
+      width:"100%",
       height: "77vh"
     },
     mainHomeContainerImage:{
       display: 'Flex',
-      height: "87vh"
+      gridColumn: '2 / 2',
+      width:'100%',
+      height: "87vh",
     },
     mainHomeImage: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '368px',
-      height: '389px',
-      gridColumn: '2 / 2',
+      width: '350px',
+      height: '350px',
       backgroundColor: '#a9a9a9',
       borderRadius: '24px',
       margin: '130px 0 0 300px',
@@ -126,6 +122,7 @@ const styles = {
     },
     CarHome: {
       height: '100vh',
+      width:'100%',
       display: 'flex',
       flexDirection: 'column',
     },
@@ -146,6 +143,7 @@ const styles = {
     },
     InfoCarHome: {
       display: 'flex',
+      width:'100%',
       justifyContent: 'center',
       alignItems: 'center',
       margin: '89px 0 0 0'
@@ -161,8 +159,8 @@ const styles = {
     margin: '0 0 0 100px'
     },
     ImageInfoCarHome: {
-      width: '352px',
-      height: '352px',
+      width: '250px',
+      height: '250px',
       borderRadius: '24px',
       backgroundPosition: 'center center',
       backgroundSize: 'cover',
@@ -173,11 +171,26 @@ const styles = {
 
 
 
+
 export default function Home() {
+  const [ listaCarro, setListaCarro ] = useState([])
+
+  useEffect(() => {
+      api({
+        method: 'get',
+        url:'/api/most_comments',
+      })
+      .then(response => {
+        console.log('Resposta do servidor:', response.data.carros);
+        setListaCarro(response.data.carros)
+      }).catch(erro => {
+          alert("Erro ao buscar carros comentados")
+      })
+}, []);
   
   if(getUser() != 'null'){
     return (
-      <div className="flex w-full flex-col items-center justify-between bg-white">
+      <div className="flex w-full h-full flex-col bg-white">
         <Globalcomparator/>
           <nav style={styles.Header}>
             <p style={styles.Text}>You Cars</p>
@@ -196,8 +209,8 @@ export default function Home() {
               priority={true}
               style={styles.imge}
               src={'/img/medidor.png'}
-              width={241}
-              height={236}
+              width={250}
+              height={250}
               alt="Medidor"/>
               </div>
             </div>
@@ -208,6 +221,7 @@ export default function Home() {
           <section style={styles.CarHome}>
           <h2 style={styles.TitleCarHome}>Carros mais comentados</h2>
             <div style={styles.MaisComentadoCarHome}>
+            {listaCarro.map((carro) => (<CardComent key={carro.id} carro={ carro } />))}
             
             </div>
             
@@ -234,7 +248,7 @@ export default function Home() {
   }
   else{
     return(
-      <div className="flex w-screen flex-col items-center justify-between bg-white">
+      <div className="flex h-full w-full flex-col bg-white">
       <nav style={styles.Header}>
         <p style={styles.Text}>You Cars</p>
         <a style={styles.TextPerfil} href="/login">Fazer Login</a>
@@ -255,6 +269,7 @@ export default function Home() {
           height={236}
           alt="Medidor"/>
           </div>
+
         </div>
         
         
@@ -263,7 +278,7 @@ export default function Home() {
       <section style={styles.CarHome}>
       <h2 style={styles.TitleCarHome}>Carros mais comentados</h2>
         <div style={styles.MaisComentadoCarHome}>
-          
+          {listaCarro.map((carro) => (<CardComent key={carro.id} carro={ carro } />))}
         </div>
         
         <div style={styles.InfoCarHome}>

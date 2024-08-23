@@ -1,6 +1,6 @@
 'use client'
 import Card from "../../components/cardCar.jsx"
-import CardCompare from "../../components/cardCompare.jsx"
+import CardCompare from "../../components/cardComent.jsx"
 import Footer from "../../components/footer.jsx"
 import Header from "../../components/header.jsx"
 import ResulComp from "../../components/resulComp.jsx"

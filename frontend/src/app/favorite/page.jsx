@@ -39,6 +39,7 @@ export default function Search() {
   const [carros, setCarros] = useState([]);
   
   useEffect(() => {
+    if(getUser() == 'null') return;
     const login = getUser();
     const senha = getPassword();
     api({

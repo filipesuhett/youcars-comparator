@@ -285,7 +285,7 @@ export default function Perfil() {
     );
   }
   else{
-    window.location.href('/login')
+    window.location.href = '/login'
   }
   
 }

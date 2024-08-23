@@ -28,7 +28,7 @@ router.post('/add_comment', challangeAuth, addUserToRequest, comment.addComment)
 router.post('/remove_comment', challangeAuth, addUserToRequest, comment.removeComment);
 router.get('/list_comment_user', challangeAuth, addUserToRequest, comment.listCommentUser);
 router.get('/list_comment_car', challangeAuth, comment.listCommentCar);
-router.get('/most_comments', challangeAuth, comment.mostComments);
+router.get('/most_comments',  comment.mostComments);
 
 
 

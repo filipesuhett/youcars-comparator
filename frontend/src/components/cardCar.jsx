@@ -12,12 +12,13 @@ const styles = {
     alignItems: 'center',
     flexDirection: "Column",
     width: '273px',
-    height: '454px',
+    height: '410px',
     backgroundColor: '#e5e7eb',
     borderRadius: '24px',
     border: '1px solid #030303',
     boxSizing: 'border-box',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    padding:'0 0 10px 0'
   },
   imge: {
     width:'241px',
@@ -113,8 +114,8 @@ const Card = ({ carro, adicionarComparador }) => {
         priority={true}
         style={styles.imge}
         src={carro.img ?? defaultImage }
-        width={241}
-        height={236}
+        width={300}
+        height={300}
         alt="Picture of the author"
         onClick={handleClickInfoCarro}
         />

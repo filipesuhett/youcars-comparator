@@ -22,8 +22,8 @@ const styles = {
       coments: {
         display: 'flex',
         justifyContent: 'end',
-        width: '1053px',
-        height: '680px',
+        width: '1000px',
+        height: '550px',
         backgroundColor: '#a9a9a9',
         borderRadius: '24px',
       },

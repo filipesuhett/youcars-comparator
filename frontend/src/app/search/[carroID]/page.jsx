@@ -203,6 +203,8 @@ export default function CarDetais({ params }) {
   },[])
 
   useEffect( () => {
+    if(getUser() == 'null') return;
+    
     api({
       method: 'get',
       url:'/api/searchID',
@@ -388,9 +390,9 @@ export default function CarDetais({ params }) {
     guardarCarro(carro)
 }
 
-if(getUser == 'null'){
+if(getUser() != 'null'){
   return (
-    <div className="flex w-full flex-col bg-white">
+    <div className="flex h-full w-full flex-col bg-white">
       <Header/>
       <Globalcomparator/>
 

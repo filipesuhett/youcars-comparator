@@ -27,7 +27,7 @@ const styles = {
     fontFamily: 'Source Sans 3',
     fontWeight: '500',
     lineHeight: '42px',
-    margin: '81px 0 59px 0 '
+    margin: '40px 0 40px 0 '
   }
 }
 export default function Search() {

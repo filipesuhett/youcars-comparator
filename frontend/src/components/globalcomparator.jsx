@@ -14,8 +14,8 @@ const styles = {
         position: 'fixed',
         width:'80px',
         height:'80px',
-        bottom:'100px',
-        right: '100px',
+        bottom:'8vh',
+        right: '2vw',
         backgroundColor: '#f43030',
         borderRadius:'50%',
         color: '#ffffff',
@@ -45,7 +45,7 @@ const styles = {
         margin: '40px 0 0 0'
       },
     popupComparator:{
-        position: 'absolute',
+        position: 'fixed',
         display: 'flex',
         justifyContent: 'center',
         alignItems:'center',
@@ -53,7 +53,8 @@ const styles = {
         height: '100vh',
         backgroundColor: 'rgba(0, 0, 0, 0.199)',
         zIndex: '2',
-        top:'0'
+        top:'0',
+        left:'0'
     },
     popupComparatorOptions: {
         position: 'relative',
@@ -61,8 +62,8 @@ const styles = {
         justifyContent: 'center',
         alignItems:'center',
         flexDirection: 'column',
-        width: '836px',
-        height: '829px',
+        width: '700px',
+        height: '700px',
         backgroundColor: '#ffffff',
         borderRadius: '26px',
         

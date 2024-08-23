@@ -10,11 +10,12 @@ const styles = {
     alignItems: 'center',
     flexDirection: "Column",
     width: '300px',
-    height: '520px',
+    height: '450px',
     backgroundColor: '#ffffff',
     borderRadius: '8px',
     border: '1px solid #505050',
     boxSizing: 'border-box',
+    paddin:'20px 0'
   },
   imge: {
     width: '186px',
@@ -70,6 +71,10 @@ const styles = {
     fontSize: '14px',
     fontFamily: 'Source Sans 3',
     lineHeight: '20px',
+  },
+  imge:{
+    width:'200px',
+    height:'150px'
   }
 };
 
@@ -85,8 +90,8 @@ const ResulComp = ({ carro }) => {
         priority={true}
         style={styles.imge}
         src={carro.img ?? defaultImage }
-        width={241}
-        height={236}
+        width={250}
+        height={250}
         alt="Picture of the author"/>
         
 
