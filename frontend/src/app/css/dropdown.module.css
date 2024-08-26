@@ -8,9 +8,13 @@
     border: none;
     padding: 5px, 0px, 5px, 0px;
     outline: none;
+    width: 80px;
   }
   
   .dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: transparent;
     color: rgb(56, 56, 56);
     font-size: 18px;
@@ -19,10 +23,12 @@
     line-height: 24px;
     padding: 2px;
     outline: none;
+    height: 40px;
   }
 
   .dropdown:hover{
     background-color: aliceblue;
+    border-radius: 10px;
   }
 
   .dropdownMenu{
@@ -30,27 +36,34 @@
     border: none;
     background-color: #ffffff;
     outline: none;
+    border-radius: 10px;
     
   }
 
   .mainContainer{
     outline: none;
     box-shadow: 0px 0px 6px black;
+    border-radius: 10px;
     
   }
 
   .logout{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 18px;
     font-family: Source Sans 3;
-    font-weight: 400;
+    font-weight:500;
     line-height: 24px;
     padding: 2px;
     color: rgb(163, 0, 0);
     outline: none;
+    height: 40px;
   }
 
   .logout:hover{
     cursor: pointer;
     color: rgb(228, 1, 1);
     background-color: aliceblue;
+    border-radius: 10px;
   }

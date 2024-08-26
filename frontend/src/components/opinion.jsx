@@ -107,6 +107,19 @@ const IconTrash = () => (
 
 
 const Opinion = ({comentario, login, excluir, pagUsuario}) => {
+  const date = new Date(comentario.created_at);
+
+  const formattedDate = date.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+
+  const formattedTime = date.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
   const [excluirComentario, setExcluirComentario] = useState(false)
   useEffect(() => {
     if(getUser() == comentario.login || login){
@@ -156,7 +169,7 @@ const Opinion = ({comentario, login, excluir, pagUsuario}) => {
       
       <div style={styles.cantinho}>
         
-        <p style={styles.date}>{comentario.created_at ?? "20/04/2023 20:20"}</p>
+        <p style={styles.date}>{formattedDate && formattedTime ? `${formattedDate}  ${formattedTime}` : "20/04/2023 20:20"}</p>
       </div>  
     </div>
   );

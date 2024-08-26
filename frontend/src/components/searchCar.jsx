@@ -172,6 +172,9 @@ const SearchCar = (props) => {
     }
 
     async function handleClickGetModelo(){
+      if(marca1==''||marca1=='Selecione uma Marca'){
+        return
+      }
       await api({
         method: 'get',
         url:'/api/model',
@@ -194,7 +197,9 @@ const SearchCar = (props) => {
     }
 
     async function handleClickGetAno(){
-        
+      if(modelo1==''||modelo1=='Selecione um Modelo'){
+        return
+      }
       await api({
         method: 'get',
         url:'/api/year',
