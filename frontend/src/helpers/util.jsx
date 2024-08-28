@@ -6,6 +6,7 @@ export function guardarLogin(login, senha){
 export function logout(){
     localStorage.setItem('user', null),
     localStorage.setItem('password', null)
+    localStorage.setItem("carros", JSON.stringify([]))
 }
 
 export function getUser(){
