@@ -1,0 +1,68 @@
+name: GCP
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy to GCP
+    runs-on: ubuntu-latest
+    env:
+      FRONTEND_IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:latest
+      BACKEND_IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:latest
+
+    steps:
+      # Git checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Login to GCP
+      - uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      # gcloud configure docker
+      - name: Configure Docker
+        run: gcloud auth configure-docker --quiet
+
+      # Build and push frontend Docker image
+      - name: Build Frontend Docker image
+        run: |
+          cd frontend
+          docker build -t $FRONTEND_IMAGE_NAME .
+          docker push $FRONTEND_IMAGE_NAME
+
+      # Build and push backend Docker image
+      - name: Build Backend Docker image
+        run: |
+          cd backend
+          docker build -t $BACKEND_IMAGE_NAME .
+          docker push $BACKEND_IMAGE_NAME
+
+      # Deploy frontend image
+      - name: Deploy Frontend Docker image
+        run: |
+          gcloud run deploy frontend \
+            --image $FRONTEND_IMAGE_NAME \
+            --region us-central1 \
+            --memory 128Mi \
+            --min-instances 1 \
+            --max-instances 3 \
+            --platform managed \
+            --port 8080 \
+            --allow-unauthenticated
+
+      # Deploy backend image
+      - name: Deploy Backend Docker image
+        run: |
+          gcloud run deploy backend \
+            --image $BACKEND_IMAGE_NAME \
+            --region us-central1 \
+            --memory 128Mi \
+            --min-instances 1 \
+            --max-instances 3 \
+            --platform managed \
+            --port 8080 \
+            --allow-unauthenticated
