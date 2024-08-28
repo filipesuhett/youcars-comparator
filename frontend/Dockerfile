@@ -9,7 +9,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /opt/frontend
 
 # Copy frontend-specific package.json and package-lock.json
-COPY frontend/package.json frontend/package-lock.json ./
+COPY package.json package-lock.json ./
 
 # Install npm dependencies
 RUN npm install -g npm@10.2.5 && npm config set fetch-retry-maxtimeout 600000 -g && npm install
