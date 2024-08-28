@@ -18,7 +18,7 @@ RUN npm install -g npm@10.2.5 && npm config set fetch-retry-maxtimeout 600000 -g
 RUN npm rebuild sharp
 
 # Copy the rest of the backend application
-COPY backend ./
+COPY ./ ./
 
 # Set the PATH for backend node_modules
 ENV PATH /opt/backend/node_modules/.bin:$PATH
